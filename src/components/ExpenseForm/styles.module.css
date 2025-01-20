@@ -1,0 +1,50 @@
+.inputField {
+  display: flex;
+  width: 90%;
+  margin: auto;
+  justify-content: center;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.line {
+  width: 90%;
+  margin: auto;
+  border-bottom: 1px solid black;
+}
+
+.iconContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconsubContainer {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ChevronLeftOutlinedIcon {
+  font-size: 50px;
+  border-radius: 5px;
+  background-color: rgba(194, 195, 203, 0.2);
+}
+
+.clearBtn {
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: none;
+  background-color: black;
+}
+
+.clearBtn:hover {
+  background-color: black;
+}

@@ -1,0 +1,22 @@
+.container {
+  margin: auto;
+}
+.tableContainer {
+  width: 90%;
+  margin: 0px auto 20px auto;
+}
+
+.tableCell {
+  font-size: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-align: center;
+  color: whitesmoke;
+}
+
+.pagination {
+  display: flex;
+  padding-bottom: 40px;
+  justify-content: center;
+}

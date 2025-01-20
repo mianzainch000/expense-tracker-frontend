@@ -1,0 +1,16 @@
+.centeredContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.alreadyAccount {
+  margin: -20px 40px 20px 40px;
+}

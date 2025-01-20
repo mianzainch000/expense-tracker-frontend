@@ -1,0 +1,75 @@
+.main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 16px;
+  background-color: black;
+  transform: translate(-50%, -50%);
+}
+
+.main::-webkit-scrollbar {
+  display: none;
+}
+@media (max-width: 767px) {
+  .main {
+    /* Mobile width */
+    width: 90%;
+  }
+}
+
+@media (min-width: 768px) {
+  .main {
+    /* Tablet*/
+    width: 60%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .main {
+    /* Laptop  */
+    width: 35%;
+  }
+}
+
+@media (min-width: 1280px) {
+  .main {
+    /* Desktop  */
+    width: 35%;
+  }
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.crossIcon {
+  margin: 10px;
+  display: flex;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+}
+
+.msg {
+  color: white;
+  font-size: 30px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.buttonContainer {
+  display: flex;
+  height: 130px;
+  align-items: flex-end;
+  justify-content: space-evenly;
+}
+
+.btnText {
+  color: white;
+  font-size: 20px;
+  font-weight: 400;
+  padding-bottom: 10px;
+  text-transform: none;
+}

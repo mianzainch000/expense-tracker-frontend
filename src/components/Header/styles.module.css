@@ -1,0 +1,24 @@
+.income_expense {
+  width: 90%;
+  display: flex;
+  background-color: wheat;
+  justify-content: space-around;
+}
+
+.line {
+  width: 90%;
+  margin: auto;
+  border-bottom: 1px solid black;
+}
+
+.username {
+  font-size: 40px;
+  text-align: center;
+  font-weight: bolder;
+}
+
+.usernameContainer {
+  gap: 10px;
+  display: flex;
+  justify-content: center;
+}
