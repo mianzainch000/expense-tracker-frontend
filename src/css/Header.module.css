@@ -1,0 +1,149 @@
+.header {
+  top: 0;
+  bottom: 0;
+  display: flex;
+  padding: 20px;
+  flex-wrap: wrap;
+  position: sticky;
+  align-items: center;
+  border-radius: 12px;
+  color: var(--button-text);
+  background: var(--header-bg);
+  justify-content: space-between;
+  box-shadow: var(--card-shadow);
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.centerText {
+  flex: 1;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.actions {
+  gap: 12px;
+  display: flex;
+}
+
+.btn {
+  gap: 6px;
+  border: none;
+  display: flex;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 8px 14px;
+  text-align: center;
+  border-radius: 12px;
+  align-items: center;
+  text-decoration: none;
+  justify-content: center;
+  background: var(--btn-bg);
+  color: var(--button-text);
+  transition: all 0.3s ease;
+  box-shadow: var(--button-shadow);
+}
+
+/* Hover Effect */
+.btn:hover {
+  transform: translateY(-2px);
+  background: var(--btn-hover);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Logout Button */
+.logout {
+  color: var(--button-text);
+  background: var(--logout-bg);
+}
+
+.logout:hover {
+  transform: translateY(-2px);
+  background: var(--logout-hover);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Active Link Styling */
+.active {
+  font-weight: 700;
+  color: var(--button-text);
+  transform: translateY(-1px);
+  background: var(--success-color);
+  box-shadow: 0 0 8px var(--active-shadow);
+}
+
+/* Toggle Theme Button */
+button.toggleTheme {
+  gap: 8px;
+  display: flex;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 8px 14px;
+  text-align: center;
+  border-radius: 20px;
+  align-items: center;
+  transition: all 0.3s ease;
+  background: var(--bg-color);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+button.toggleTheme:hover {
+  color: var(--button-text);
+  transform: translateY(-2px);
+  background: var(--primary-color);
+}
+
+/* -------------------
+   📱 Responsive Design
+------------------- */
+@media (max-width: 768px) {
+  .header {
+    gap: 10px;
+    padding: 16px;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .centerText {
+    flex: unset;
+    font-size: 1rem;
+  }
+
+  .actions {
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn,
+  button.toggleTheme {
+    width: auto;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 1.1rem;
+  }
+
+  .centerText {
+    font-size: 0.9rem;
+  }
+
+  .btn,
+  button.toggleTheme {
+    gap: 6px;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}
