@@ -20,10 +20,16 @@ const ConfirmModal = ({ isOpen, title, message, onConfirm, onCancel }) => {
         <p className={styles.message}>{message}</p>
 
         <div className={styles.buttons}>
-          <button className={`${styles.actionBtn} ${styles.cancelBtn}`} onClick={onCancel}>
+          <button
+            className={`${styles.actionBtn} ${styles.cancelBtn}`}
+            onClick={onCancel}
+          >
             Cancel
           </button>
-          <button className={`${styles.actionBtn} ${styles.confirmBtn}`} onClick={handleConfirm}>
+          <button
+            className={`${styles.actionBtn} ${styles.confirmBtn}`}
+            onClick={handleConfirm}
+          >
             Confirm
           </button>
         </div>

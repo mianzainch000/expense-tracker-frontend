@@ -5,8 +5,8 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Loader from "@/components/Loader";
 import styles from "@/css/Auth.module.css";
-import { useSnackbar } from "@/components/Snackbar";
 import { useRouter } from "next/navigation";
+import { useSnackbar } from "@/components/Snackbar";
 
 const Signup = () => {
   const [email, setEmail] = useState("");

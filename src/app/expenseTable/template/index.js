@@ -1,16 +1,15 @@
 "use client";
 import axios from "axios";
+import Link from "next/link";
 import Loader from "@/components/Loader";
 import { setCookie } from "cookies-next";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Pagination from "@/components/Pagination";
 import styles from "@/css/ExpenseTable.module.css";
 import { useSnackbar } from "@/components/Snackbar";
 import ConfirmModal from "@/components/ConfirmModal";
 
 const ExpenseTable = () => {
-  const router = useRouter();
   const showAlertMessage = useSnackbar();
 
   const [cash, setCash] = useState(0);
@@ -73,7 +72,6 @@ const ExpenseTable = () => {
   // Set selected expense for editing
   const handleEdit = (row) => {
     localStorage.setItem(`expense_${row._id}`, JSON.stringify(row));
-    router.push(`/expenseForm/${row._id}`);
   };
 
   // Delete expense function
@@ -209,12 +207,14 @@ const ExpenseTable = () => {
                     <td data-label="Payment Type">{row.paymentType}</td>
                     <td data-label="Type">{row.type}</td>
                     <td data-label="Actions">
-                      <button
-                        className={styles.actionBtn}
-                        onClick={() => handleEdit(row)}
-                      >
-                        ✏️
-                      </button>
+                      <Link href={`/expenseForm/${row._id}`}>
+                        <button
+                          className={styles.actionBtn}
+                          onClick={() => handleEdit(row)}
+                        >
+                          ✏️
+                        </button>
+                      </Link>
 
                       <button
                         className={styles.actionBtn}
