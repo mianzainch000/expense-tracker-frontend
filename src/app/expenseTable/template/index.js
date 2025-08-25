@@ -2,27 +2,26 @@
 import axios from "axios";
 import Loader from "@/components/Loader";
 import { setCookie } from "cookies-next";
-import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Pagination from "@/components/Pagination";
 import styles from "@/css/ExpenseTable.module.css";
 import { useSnackbar } from "@/components/Snackbar";
 import ConfirmModal from "@/components/ConfirmModal";
-import { openConfirmModal } from "@/reduxToolkit/slices/confirmModalSlice";
 
 const ExpenseTable = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
   const showAlertMessage = useSnackbar();
 
+  const [cash, setCash] = useState(0);
+  const [account, setAccount] = useState(0);
+  const [deleteId, setDeleteId] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [totalIncome, setTotalIncome] = useState(0);
   const [getExpenses, setGetExpenses] = useState([]);
   const [totalBalance, setTotalBalance] = useState(0);
-  const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
-  const [cash, setCash] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [account, setAccount] = useState(0);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   // Pagination
 
@@ -138,15 +137,12 @@ const ExpenseTable = () => {
     }
   };
 
-  // Open confirm modal before deleting
-  const confirmDelete = (id) => {
-    dispatch(
-      openConfirmModal({
-        title: "Delete Expense",
-        message: "Are you sure you want to delete this expense?",
-        onConfirm: () => handleDelete(id),
-      }),
-    );
+  const handleConfirmDelete = () => {
+    if (deleteId) {
+      handleDelete(deleteId);
+      setDeleteId("");
+      setModalOpen(false);
+    }
   };
 
   return (
@@ -222,7 +218,10 @@ const ExpenseTable = () => {
 
                       <button
                         className={styles.actionBtn}
-                        onClick={() => confirmDelete(row._id)}
+                        onClick={() => {
+                          setDeleteId(row._id);
+                          setModalOpen(true);
+                        }}
                       >
                         🗑️
                       </button>
@@ -238,7 +237,16 @@ const ExpenseTable = () => {
           </table>
         </div>
       </div>
-      <ConfirmModal />
+
+      {/* Confirm Modal */}
+      <ConfirmModal
+        isOpen={isModalOpen}
+        title="Delete Expense"
+        message="Are you sure you want to delete?"
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setModalOpen(false)}
+      />
+
       {/* Pagination */}
       <Pagination
         currentPage={currentPage}
