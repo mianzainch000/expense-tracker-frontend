@@ -1,14 +1,13 @@
 import storage from "redux-persist/lib/storage";
-import loadingReducer from "./slices/loadingSlice";
-import editExpenseReducer from "./slices/editExpenseSlice";
+
+
 import { persistReducer, persistStore } from "redux-persist";
 import confirmModalReducer from "./slices/confirmModalSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 // Combine reducers
 const rootReducer = combineReducers({
-  loading: loadingReducer,
-  editExpense: editExpenseReducer,
+
   confirmModal: confirmModalReducer,
 });
 

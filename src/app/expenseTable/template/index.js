@@ -2,15 +2,14 @@
 import axios from "axios";
 import Loader from "@/components/Loader";
 import { setCookie } from "cookies-next";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Pagination from "@/components/Pagination";
 import styles from "@/css/ExpenseTable.module.css";
 import { useSnackbar } from "@/components/Snackbar";
 import ConfirmModal from "@/components/ConfirmModal";
-import { useDispatch, useSelector } from "react-redux";
 import { openConfirmModal } from "@/reduxToolkit/slices/confirmModalSlice";
-import { startLoading, stopLoading } from "@/reduxToolkit/slices/loadingSlice";
 
 const ExpenseTable = () => {
   const router = useRouter();
@@ -22,8 +21,8 @@ const ExpenseTable = () => {
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
   const [cash, setCash] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [account, setAccount] = useState(0);
-  const isLoading = useSelector((state) => state.loading.isLoading);
 
   // Pagination
 
@@ -43,7 +42,7 @@ const ExpenseTable = () => {
   // Fetch expenses from backend
 
   const getExpense = async () => {
-    dispatch(startLoading());
+    setLoading(true);
     try {
       const res = await axios.get("/expenseTable/api");
       if (res?.data?.expenses) {
@@ -64,7 +63,7 @@ const ExpenseTable = () => {
         type: "error",
       });
     } finally {
-      dispatch(stopLoading());
+      setLoading(false);
     }
   };
 
@@ -81,7 +80,7 @@ const ExpenseTable = () => {
   // Delete expense function
   const handleDelete = async (id) => {
     try {
-      dispatch(startLoading());
+      setLoading(true);
 
       const res = await axios.delete(`expenseTable/api/${id}`, {
         data: { id },
@@ -135,7 +134,7 @@ const ExpenseTable = () => {
         type: "error",
       });
     } finally {
-      dispatch(stopLoading());
+      setLoading(false);
     }
   };
 
@@ -152,7 +151,7 @@ const ExpenseTable = () => {
 
   return (
     <>
-      {isLoading && <Loader />}
+      {loading && <Loader />}
       <div className={styles.container}>
         <div className={styles.balanceContainer}>
           <div className={styles.balanceSection}>

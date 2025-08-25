@@ -5,19 +5,16 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "@/css/ExpenseForm.module.css";
 import { useSnackbar } from "@/components/Snackbar";
-import { useDispatch, useSelector } from "react-redux";
-import { startLoading, stopLoading } from "@/reduxToolkit/slices/loadingSlice";
 
 const ExpenseForm = ({ expenseData }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [type, setType] = useState("");
   const [date, setDate] = useState("");
   const [amount, setAmount] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [paymentType, setPaymentType] = useState("");
   const [description, setDescription] = useState("");
-  const isLoading = useSelector((state) => state.loading.isLoading);
 
   const showAlertMessage = useSnackbar();
 
@@ -70,7 +67,7 @@ const ExpenseForm = ({ expenseData }) => {
   }
 
   const postData = async () => {
-    dispatch(startLoading());
+    setLoading(true);
     try {
       let res = await axios.post("expenseForm/api", {
         date,
@@ -113,12 +110,12 @@ const ExpenseForm = ({ expenseData }) => {
         });
       }
     } finally {
-      dispatch(stopLoading());
+      setLoading(false);
     }
   };
 
   const updatetData = async () => {
-    dispatch(startLoading());
+    setLoading(true);
     try {
       let res = await axios.put(`api/${id}`, {
         date,
@@ -163,13 +160,13 @@ const ExpenseForm = ({ expenseData }) => {
         });
       }
     } finally {
-      dispatch(stopLoading());
+      setLoading(false);
     }
   };
 
   return (
     <>
-      {isLoading && <Loader />}
+      {loading && <Loader />}
       <div className={styles.wrapper}>
         <div className={styles.container}>
           <h2 className={styles.title}>
