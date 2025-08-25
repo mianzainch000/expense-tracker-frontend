@@ -1,10 +1,10 @@
-import ExpenseForm from "../template";
+import Update from "./index";
 
-const Update = () => {
-  return <ExpenseForm />;
+const UpdateForm = () => {
+  return <Update />;
 };
 
-export default Update;
+export default UpdateForm;
 
 export function generateMetadata() {
   return { title: "Update Transcation" };

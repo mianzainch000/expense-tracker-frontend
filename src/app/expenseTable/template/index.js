@@ -1,6 +1,5 @@
 "use client";
 import axios from "axios";
-import Link from "next/link";
 import Loader from "@/components/Loader";
 import { setCookie } from "cookies-next";
 import { useEffect, useState } from "react";
@@ -9,11 +8,12 @@ import styles from "@/css/ExpenseTable.module.css";
 import { useSnackbar } from "@/components/Snackbar";
 import ConfirmModal from "@/components/ConfirmModal";
 import { useDispatch, useSelector } from "react-redux";
-import { setEditExpense } from "@/reduxToolkit/slices/editExpenseSlice";
 import { openConfirmModal } from "@/reduxToolkit/slices/confirmModalSlice";
 import { startLoading, stopLoading } from "@/reduxToolkit/slices/loadingSlice";
+import { useRouter } from "next/navigation";
 
 const ExpenseTable = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const showAlertMessage = useSnackbar();
 
@@ -73,8 +73,9 @@ const ExpenseTable = () => {
   }, []);
 
   // Set selected expense for editing
-  const handleEdit = (item) => {
-    dispatch(setEditExpense(item));
+  const handleEdit = (row) => {
+    localStorage.setItem(`expense_${row._id}`, JSON.stringify(row));
+    router.push(`/expenseForm/${row._id}`);
   };
 
   // Delete expense function
@@ -213,14 +214,13 @@ const ExpenseTable = () => {
                     <td data-label="Payment Type">{row.paymentType}</td>
                     <td data-label="Type">{row.type}</td>
                     <td data-label="Actions">
-                      <Link href={`/expenseForm/${row._id}`}>
-                        <button
-                          className={styles.actionBtn}
-                          onClick={() => handleEdit(row)}
-                        >
-                          ✏️
-                        </button>
-                      </Link>
+                      <button
+                        className={styles.actionBtn}
+                        onClick={() => handleEdit(row)}
+                      >
+                        ✏️
+                      </button>
+
                       <button
                         className={styles.actionBtn}
                         onClick={() => confirmDelete(row._id)}

@@ -8,7 +8,6 @@ import { useSnackbar } from "@/components/Snackbar";
 import ConfirmModal from "@/components/ConfirmModal";
 import { useRouter, usePathname } from "next/navigation";
 import { setCookie, deleteCookie, getCookie } from "cookies-next";
-import { clearEditExpense } from "@/reduxToolkit/slices/editExpenseSlice";
 import { openConfirmModal } from "@/reduxToolkit/slices/confirmModalSlice";
 
 const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
@@ -25,11 +24,6 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
     setTheme(savedTheme);
     document.documentElement.setAttribute("data-theme", savedTheme);
   }, []);
-
-  // Clear the edit expense state
-  const clearEditId = () => {
-    dispatch(clearEditExpense());
-  };
 
   // Toggle theme
   const toggleTheme = () => {
@@ -53,8 +47,6 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
           // Reset theme state
           setTheme("light");
           document.documentElement.setAttribute("data-theme", "light");
-
-          dispatch(clearEditExpense());
           showAlertMessage({
             message: "✅ Logout successful",
             type: "success",
@@ -62,7 +54,7 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
 
           router.push("/");
         },
-      }),
+      })
     );
   };
 
@@ -71,7 +63,7 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
       <header className={styles.header}>
         {/* Logo */}
         <div className={styles.logo}>
-          <Link href="/" onClick={clearEditId}>
+          <Link href="/">
             <Image src="/logo.png" alt="Logo" width={50} height={50} />
           </Link>
         </div>
@@ -85,19 +77,16 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
         <div className={styles.actions}>
           <Link
             href="/expenseForm"
-            onClick={clearEditId}
-            className={`${styles.btn} ${
-              pathname === "/expenseForm" ? styles.active : ""
-            }`}
+            className={`${styles.btn} ${pathname === "/expenseForm" ? styles.active : ""
+              }`}
           >
             Add Expense
           </Link>
 
           <Link
             href="/expenseTable"
-            className={`${styles.btn} ${
-              pathname === "/expenseTable" ? styles.active : ""
-            }`}
+            className={`${styles.btn} ${pathname === "/expenseTable" ? styles.active : ""
+              }`}
           >
             Table
           </Link>

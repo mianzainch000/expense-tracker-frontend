@@ -7,18 +7,16 @@ import Loader from "@/components/Loader";
 import styles from "@/css/Auth.module.css";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "@/components/Snackbar";
-import { useDispatch, useSelector } from "react-redux";
-import { startLoading, stopLoading } from "@/reduxToolkit/slices/loadingSlice";
 
 const Login = () => {
+
   const router = useRouter();
+  const showAlertMessage = useSnackbar();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
-  const dispatch = useDispatch();
-  const showAlertMessage = useSnackbar();
-  const isLoading = useSelector((state) => state.loading.isLoading);
 
   function validate() {
     // Check if email is empty or invalid
@@ -49,7 +47,7 @@ const Login = () => {
 
   const Login = async () => {
     try {
-      dispatch(startLoading());
+      setLoading(true);
       const res = await signIn("credentials", {
         email: email,
         password: password,
@@ -87,13 +85,13 @@ const Login = () => {
         });
       }
     } finally {
-      dispatch(stopLoading());
+      setLoading(false);
     }
   };
 
   return (
     <>
-      {isLoading && <Loader />}
+      {loading && <Loader />}
       <div className={styles.container}>
         <div className={styles.card}>
           <div className={styles.logoWrapper}>

@@ -6,19 +6,18 @@ import { useRouter } from "next/navigation";
 import styles from "@/css/ExpenseForm.module.css";
 import { useSnackbar } from "@/components/Snackbar";
 import { useDispatch, useSelector } from "react-redux";
-import { clearEditExpense } from "@/reduxToolkit/slices/editExpenseSlice";
 import { startLoading, stopLoading } from "@/reduxToolkit/slices/loadingSlice";
 
-const ExpenseForm = () => {
+const ExpenseForm = ({ expenseData }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [id, setId] = useState("");
   const [type, setType] = useState("");
   const [date, setDate] = useState("");
   const [amount, setAmount] = useState(0);
   const [paymentType, setPaymentType] = useState("");
   const [description, setDescription] = useState("");
   const isLoading = useSelector((state) => state.loading.isLoading);
-  const editExpense = useSelector((state) => state.editExpense.editExpense);
 
   const showAlertMessage = useSnackbar();
 
@@ -51,20 +50,19 @@ const ExpenseForm = () => {
   }
 
   useEffect(() => {
-    if (editExpense) {
-      setDate(editExpense.date);
-      setDescription(editExpense.description);
-      setAmount(editExpense.amount);
-      setPaymentType(editExpense.paymentType);
-      setType(editExpense.type);
-    }
-  }, [editExpense]);
+    setId(expenseData?._id || "");
+    setDate(expenseData?.date || "");
+    setDescription(expenseData?.description || "");
+    setAmount(expenseData?.amount || 0);
+    setPaymentType(expenseData?.paymentType || "");
+    setType(expenseData?.type || "");
+  }, [expenseData]);
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (!validate()) return;
 
-    if (editExpense && editExpense._id) {
+    if (id) {
       await updatetData();
     } else {
       await postData();
@@ -122,7 +120,7 @@ const ExpenseForm = () => {
   const updatetData = async () => {
     dispatch(startLoading());
     try {
-      let res = await axios.put(`api/${editExpense._id}`, {
+      let res = await axios.put(`api/${id}`, {
         date,
         description,
         amount,
@@ -140,7 +138,7 @@ const ExpenseForm = () => {
         setAmount("");
         setPaymentType("");
         setType("");
-        dispatch(clearEditExpense());
+        setId("");
       } else {
         showAlertMessage({
           message:
@@ -175,7 +173,7 @@ const ExpenseForm = () => {
       <div className={styles.wrapper}>
         <div className={styles.container}>
           <h2 className={styles.title}>
-            {!editExpense ? "Add Transaction" : "Edit Transcation"}
+            {!id ? "Add Transaction" : "Edit Transcation"}
           </h2>
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.field}>
@@ -256,7 +254,7 @@ const ExpenseForm = () => {
             </div>
 
             <button type="submit" className={styles.button}>
-              {!editExpense ? "Add Transaction" : "Edit Transcation"}
+              {!id ? "Add Transaction" : "Edit Transcation"}
             </button>
           </form>
         </div>
