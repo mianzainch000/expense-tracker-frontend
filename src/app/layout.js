@@ -1,5 +1,4 @@
 import "./globals.css";
-import { Providers } from "@/reduxToolkit/provider";
 import NextLoader from "@/components/NextTopLoader";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SnackbarProvider } from "@/components/Snackbar";
@@ -28,7 +27,7 @@ export default function RootLayout({ children }) {
       >
         <SnackbarProvider>
           <NextLoader />
-          <Providers>{children}</Providers>
+          {children}
         </SnackbarProvider>
       </body>
     </html>
