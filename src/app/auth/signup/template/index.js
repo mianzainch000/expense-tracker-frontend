@@ -6,21 +6,18 @@ import React, { useState } from "react";
 import Loader from "@/components/Loader";
 import styles from "@/css/Auth.module.css";
 import { useSnackbar } from "@/components/Snackbar";
-import { useDispatch, useSelector } from "react-redux";
-import { startLoading, stopLoading } from "@/reduxToolkit/slices/loadingSlice";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const dispatch = useDispatch();
   const showAlertMessage = useSnackbar();
-  const isLoading = useSelector((state) => state.loading.isLoading);
 
   function validate() {
     // Check if first name is empty
@@ -78,7 +75,7 @@ const Signup = () => {
   }
 
   const signup = async () => {
-    dispatch(startLoading());
+    setLoading(true);
     try {
       let res = await axios.post("signup/api", {
         firstName,
@@ -120,12 +117,12 @@ const Signup = () => {
         });
       }
     } finally {
-      dispatch(stopLoading());
+      setLoading(false);
     }
   };
   return (
     <>
-      {isLoading && <Loader />}
+      {loading && <Loader />}
       <div className={styles.container}>
         <div className={styles.card}>
           <div className={styles.logoWrapper}>

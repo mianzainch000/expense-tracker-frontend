@@ -8,20 +8,18 @@ import styles from "@/css/Auth.module.css";
 import { apiConfig } from "@/config/apiConfig";
 import { useSearchParams } from "next/navigation";
 import { useSnackbar } from "@/components/Snackbar";
-import { useDispatch, useSelector } from "react-redux";
-import { startLoading, stopLoading } from "@/reduxToolkit/slices/loadingSlice";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const searchParams = useSearchParams();
   const token = searchParams?.get("token") || "";
-  const dispatch = useDispatch();
+
   const showAlertMessage = useSnackbar();
-  const isLoading = useSelector((state) => state.loading.isLoading);
 
   function validate() {
     // Check if password is empty
@@ -58,7 +56,7 @@ const ResetPassword = () => {
 
   const ResetPasswordApi = async () => {
     try {
-      dispatch(startLoading());
+      setLoading(true);
       const res = await axios.post(
         `${apiConfig.baseUrl}${apiConfig.resetPassword}/${token}`,
         {
@@ -95,13 +93,13 @@ const ResetPassword = () => {
         });
       }
     } finally {
-      dispatch(stopLoading());
+      setLoading(false);
     }
   };
 
   return (
     <>
-      {isLoading && <Loader />}
+      {loading && <Loader />}
       <div className={styles.container}>
         <div className={styles.card}>
           <div className={styles.logoWrapper}>

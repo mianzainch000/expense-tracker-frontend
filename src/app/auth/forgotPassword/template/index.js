@@ -7,15 +7,12 @@ import Loader from "@/components/Loader";
 import styles from "@/css/Auth.module.css";
 import { apiConfig } from "@/config/apiConfig";
 import { useSnackbar } from "@/components/Snackbar";
-import { useDispatch, useSelector } from "react-redux";
-import { startLoading, stopLoading } from "@/reduxToolkit/slices/loadingSlice";
 
 const ForgortPassword = () => {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
   const showAlertMessage = useSnackbar();
-  const isLoading = useSelector((state) => state.loading.isLoading);
 
   function validate() {
     // Check if email is empty or invalid
@@ -40,7 +37,7 @@ const ForgortPassword = () => {
 
   const ForgotPasswordApi = async () => {
     try {
-      dispatch(startLoading());
+      setLoading(true);
       const res = await axios.post(
         `${apiConfig.baseUrl}${apiConfig.forgotPassword}`,
         { email },
@@ -74,12 +71,12 @@ const ForgortPassword = () => {
         });
       }
     } finally {
-      dispatch(stopLoading());
+      setLoading(false);
     }
   };
   return (
     <>
-      {isLoading && <Loader />}
+      {loading && <Loader />}
       <div className={styles.container}>
         <div className={styles.card}>
           <div className={styles.logoWrapper}>
