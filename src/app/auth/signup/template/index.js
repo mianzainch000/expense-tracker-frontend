@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import Loader from "@/components/Loader";
 import styles from "@/css/Auth.module.css";
 import { useSnackbar } from "@/components/Snackbar";
+import { useRouter } from "next/navigation";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -17,6 +18,7 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const router = useRouter();
   const showAlertMessage = useSnackbar();
 
   function validate() {
@@ -95,6 +97,7 @@ const Signup = () => {
         setEmail("");
         setPassword("");
         setConfirmPassword("");
+        router.push("/");
       } else {
         showAlertMessage({
           message:

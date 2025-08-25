@@ -1,22 +1,19 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import styles from "@/css/Header.module.css";
 import { useSnackbar } from "@/components/Snackbar";
 import ConfirmModal from "@/components/ConfirmModal";
 import { useRouter, usePathname } from "next/navigation";
 import { setCookie, deleteCookie, getCookie } from "cookies-next";
-import { openConfirmModal } from "@/reduxToolkit/slices/confirmModalSlice";
 
 const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
   const pathname = usePathname();
   const showAlertMessage = useSnackbar();
 
-  // Theme state: props > cookie > default
+  const [isModalOpen, setModalOpen] = useState(false);
   const [theme, setTheme] = useState(initialTheme || "light");
 
   useEffect(() => {
@@ -35,27 +32,24 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
 
   // Confirm logout
   const confirmLogout = () => {
-    dispatch(
-      openConfirmModal({
-        title: "Logout",
-        message: "Are you sure you want to logout?",
-        onConfirm: () => {
-          deleteCookie("sessionToken");
-          deleteCookie("firstName");
-          deleteCookie("lastName");
+    setModalOpen(true);
+  };
 
-          // Reset theme state
-          setTheme("light");
-          document.documentElement.setAttribute("data-theme", "light");
-          showAlertMessage({
-            message: "✅ Logout successful",
-            type: "success",
-          });
+  const handleConfirm = () => {
+    deleteCookie("sessionToken");
+    deleteCookie("firstName");
+    deleteCookie("lastName");
 
-          router.push("/");
-        },
-      }),
-    );
+    showAlertMessage({
+      message: "✅ Logout successful",
+      type: "success",
+    });
+
+    setTheme("light");
+    document.documentElement.setAttribute("data-theme", "light");
+
+    setModalOpen(false);
+    router.push("/");
   };
 
   return (
@@ -77,18 +71,16 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
         <div className={styles.actions}>
           <Link
             href="/expenseForm"
-            className={`${styles.btn} ${
-              pathname === "/expenseForm" ? styles.active : ""
-            }`}
+            className={`${styles.btn} ${pathname === "/expenseForm" ? styles.active : ""
+              }`}
           >
             Add Expense
           </Link>
 
           <Link
             href="/expenseTable"
-            className={`${styles.btn} ${
-              pathname === "/expenseTable" ? styles.active : ""
-            }`}
+            className={`${styles.btn} ${pathname === "/expenseTable" ? styles.active : ""
+              }`}
           >
             Table
           </Link>
@@ -108,7 +100,13 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
       </header>
 
       {/* Confirm Modal */}
-      <ConfirmModal />
+      <ConfirmModal
+        isOpen={isModalOpen}
+        title="Logout"
+        message="Are you sure you want to logout?"
+        onConfirm={handleConfirm}
+        onCancel={() => setModalOpen(false)}
+      />
     </>
   );
 };
