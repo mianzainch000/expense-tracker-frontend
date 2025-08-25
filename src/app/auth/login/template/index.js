@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { useSnackbar } from "@/components/Snackbar";
 
 const Login = () => {
-
   const router = useRouter();
   const showAlertMessage = useSnackbar();
 

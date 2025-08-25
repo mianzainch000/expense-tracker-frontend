@@ -3,6 +3,7 @@ import axios from "axios";
 import Loader from "@/components/Loader";
 import { setCookie } from "cookies-next";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Pagination from "@/components/Pagination";
 import styles from "@/css/ExpenseTable.module.css";
 import { useSnackbar } from "@/components/Snackbar";
@@ -10,7 +11,6 @@ import ConfirmModal from "@/components/ConfirmModal";
 import { useDispatch, useSelector } from "react-redux";
 import { openConfirmModal } from "@/reduxToolkit/slices/confirmModalSlice";
 import { startLoading, stopLoading } from "@/reduxToolkit/slices/loadingSlice";
-import { useRouter } from "next/navigation";
 
 const ExpenseTable = () => {
   const router = useRouter();
