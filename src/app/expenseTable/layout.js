@@ -2,8 +2,8 @@ import { cookies } from "next/headers";
 import Header from "@/components/Header";
 
 const Layout = async ({ children }) => {
-  const cookieStore = cookies();
-  const theme = (await cookieStore.get("theme")?.value) || "light";
+  const cookieStore = await cookies();
+  const theme = (cookieStore.get("theme")?.value) || "light";
   const firstName = cookieStore.get("firstName")?.value || null;
   const lastName = cookieStore.get("lastName")?.value || null;
 
