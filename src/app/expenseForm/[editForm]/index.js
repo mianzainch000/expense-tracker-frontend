@@ -1,5 +1,6 @@
 "use client";
 import ExpenseForm from "../template";
+import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
@@ -9,7 +10,7 @@ const Update = () => {
   const [expenseData, setExpenseData] = useState(null);
 
   useEffect(() => {
-    const storedData = localStorage.getItem(`expense_${expenseId}`);
+    const storedData = getCookie(`expense_${expenseId}`);
     if (storedData) {
       const data = JSON.parse(storedData);
       setExpenseData(data);

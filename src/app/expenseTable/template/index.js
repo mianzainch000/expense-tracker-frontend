@@ -2,10 +2,10 @@
 import axios from "axios";
 import Link from "next/link";
 import Loader from "@/components/Loader";
-import { getCookie, setCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import Pagination from "@/components/Pagination";
 import styles from "@/css/ExpenseTable.module.css";
+import { getCookie, setCookie } from "cookies-next";
 import { useSnackbar } from "@/components/Snackbar";
 import ConfirmModal from "@/components/ConfirmModal";
 
@@ -36,8 +36,6 @@ const ExpenseTable = () => {
     setCurrentPage(page);
     setCookie("currentPage", page, { maxAge: 60 * 60 * 24 * 7 });
   };
-
-
 
   // Fetch expenses from backend
 
@@ -79,10 +77,11 @@ const ExpenseTable = () => {
     setCurrentPage(page);
   }, [getExpenses]);
 
-
   // Edit Data
   const handleEdit = (row) => {
-    localStorage.setItem(`expense_${row._id}`, JSON.stringify(row));
+    setCookie(`expense_${row._id}`, JSON.stringify(row), {
+      maxAge: 60 * 60 * 24 * 7,
+    });
   };
 
   // Delete expense function
