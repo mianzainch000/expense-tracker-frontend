@@ -2,7 +2,7 @@
 import axios from "axios";
 import Link from "next/link";
 import Loader from "@/components/Loader";
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import Pagination from "@/components/Pagination";
 import styles from "@/css/ExpenseTable.module.css";
@@ -37,6 +37,8 @@ const ExpenseTable = () => {
     setCookie("currentPage", page, { maxAge: 60 * 60 * 24 * 7 });
   };
 
+
+
   // Fetch expenses from backend
 
   const getExpense = async () => {
@@ -69,7 +71,16 @@ const ExpenseTable = () => {
     getExpense();
   }, []);
 
-  // Set selected expense for editing
+  // Pagination use Effect
+  useEffect(() => {
+    const savedPage = getCookie("currentPage");
+    const totalPages = Math.ceil(getExpenses.length / rowsPerPage);
+    const page = Math.min(Math.max(1, Number(savedPage)), totalPages || 1);
+    setCurrentPage(page);
+  }, [getExpenses]);
+
+
+  // Edit Data
   const handleEdit = (row) => {
     localStorage.setItem(`expense_${row._id}`, JSON.stringify(row));
   };

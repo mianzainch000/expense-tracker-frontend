@@ -8,7 +8,7 @@ import { useSnackbar } from "@/components/Snackbar";
 
 const ExpenseForm = ({ expenseData }) => {
   const router = useRouter();
-  const [id, setId] = useState("");
+  const [editId, setEditId] = useState("");
   const [type, setType] = useState("");
   const [date, setDate] = useState("");
   const [amount, setAmount] = useState(0);
@@ -47,7 +47,7 @@ const ExpenseForm = ({ expenseData }) => {
   }
 
   useEffect(() => {
-    setId(expenseData?._id || "");
+    setEditId(expenseData?._id || "");
     setDate(expenseData?.date || "");
     setDescription(expenseData?.description || "");
     setAmount(expenseData?.amount || 0);
@@ -59,7 +59,7 @@ const ExpenseForm = ({ expenseData }) => {
     e.preventDefault();
     if (!validate()) return;
 
-    if (id) {
+    if (editId) {
       await updatetData();
     } else {
       await postData();
@@ -117,7 +117,7 @@ const ExpenseForm = ({ expenseData }) => {
   const updatetData = async () => {
     setLoading(true);
     try {
-      let res = await axios.put(`api/${id}`, {
+      let res = await axios.put(`api/${editId}`, {
         date,
         description,
         amount,
@@ -135,7 +135,7 @@ const ExpenseForm = ({ expenseData }) => {
         setAmount("");
         setPaymentType("");
         setType("");
-        setId("");
+        setEditId("");
       } else {
         showAlertMessage({
           message:
@@ -170,7 +170,7 @@ const ExpenseForm = ({ expenseData }) => {
       <div className={styles.wrapper}>
         <div className={styles.container}>
           <h2 className={styles.title}>
-            {!id ? "Add Transaction" : "Edit Transcation"}
+            {!editId ? "Add Transaction" : "Edit Transcation"}
           </h2>
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.field}>
@@ -251,7 +251,7 @@ const ExpenseForm = ({ expenseData }) => {
             </div>
 
             <button type="submit" className={styles.button}>
-              {!id ? "Add Transaction" : "Edit Transcation"}
+              {!editId ? "Add Transaction" : "Edit Transcation"}
             </button>
           </form>
         </div>
