@@ -1,0 +1,122 @@
+.container {
+  display: flex;
+  padding: 20px;
+  min-height: 100dvh;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-bg);
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 30px;
+  text-align: center;
+  border-radius: 12px;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+}
+
+.logoWrapper {
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  color: var(--highlight-text);
+}
+
+.form {
+  gap: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputField {
+  width: 100%;
+  outline: none;
+  font-size: 14px;
+  transition: 0.3s;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.inputField:focus {
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 5px var(--focus-shadow);
+}
+
+.passwordWrapper {
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.toggleBtn {
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  background: none;
+  margin-left: -35px;
+}
+
+.toggleBtn:hover {
+  background: rgba(200, 200, 200, 0.3);
+}
+
+.submitBtn {
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: bold;
+  border-radius: 8px;
+  color: var(--button-text);
+  background: var(--secondary-color);
+}
+
+.submitBtn:hover {
+  background: var(--secondary-hover);
+}
+
+.loginText {
+  font-size: 14px;
+  margin-top: 20px;
+  color: var(--muted-color);
+}
+
+.loginText a {
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--secondary-color);
+}
+
+.forgotWrapper {
+  display: flex;
+  margin-top: 5px;
+  justify-content: flex-end;
+}
+
+.forgotLink {
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--primary-hover);
+}
+
+.forgotLink:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 30px 20px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+}
