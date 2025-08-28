@@ -73,16 +73,18 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
         <div className={styles.actions}>
           <Link
             href="/expenseForm"
-            className={`${styles.btn} ${pathname === "/expenseForm" ? styles.active : ""
-              }`}
+            className={`${styles.btn} ${
+              pathname === "/expenseForm" ? styles.active : ""
+            }`}
           >
             Add Expense
           </Link>
 
           <Link
             href="/expenseTable"
-            className={`${styles.btn} ${pathname === "/expenseTable" ? styles.active : ""
-              }`}
+            className={`${styles.btn} ${
+              pathname === "/expenseTable" ? styles.active : ""
+            }`}
           >
             Table
           </Link>
@@ -91,7 +93,10 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
             {theme === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
           </button>
 
-          <button className={`${styles.btn} ${styles.logout}`} onClick={confirmLogout}>
+          <button
+            className={`${styles.btn} ${styles.logout}`}
+            onClick={confirmLogout}
+          >
             Logout
           </button>
         </div>
