@@ -15,6 +15,7 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [theme, setTheme] = useState(initialTheme || "light");
+  const [isMenuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const savedTheme = getCookie("theme") || theme;
@@ -22,7 +23,6 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
     document.documentElement.setAttribute("data-theme", savedTheme);
   }, []);
 
-  // Toggle theme
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
@@ -30,9 +30,9 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
     document.documentElement.setAttribute("data-theme", newTheme);
   };
 
-  // Confirm logout
   const confirmLogout = () => {
     setModalOpen(true);
+    setMenuOpen(false);
   };
 
   const handleConfirm = () => {
@@ -52,56 +52,91 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
     router.push("/");
   };
 
+  const toggleMenu = () => setMenuOpen(!isMenuOpen);
+
   return (
     <>
       <header className={styles.header}>
-        {/* Logo */}
+        {/* Logo Left */}
         <div className={styles.logo}>
           <Link href="/">
             <Image src="/logo.png" alt="Logo" width={50} height={50} />
           </Link>
         </div>
 
-        {/* Welcome Text */}
+        {/* Desktop Welcome */}
         <div className={styles.centerText}>
           Welcome {initialFirstName || "Guest"} {initialLastName || ""}
         </div>
 
-        {/* Buttons */}
+        {/* Desktop Buttons */}
         <div className={styles.actions}>
           <Link
             href="/expenseForm"
-            className={`${styles.btn} ${
-              pathname === "/expenseForm" ? styles.active : ""
-            }`}
+            className={`${styles.btn} ${pathname === "/expenseForm" ? styles.active : ""
+              }`}
           >
             Add Expense
           </Link>
 
           <Link
             href="/expenseTable"
-            className={`${styles.btn} ${
-              pathname === "/expenseTable" ? styles.active : ""
-            }`}
+            className={`${styles.btn} ${pathname === "/expenseTable" ? styles.active : ""
+              }`}
           >
             Table
           </Link>
 
           <button className={styles.toggleTheme} onClick={toggleTheme}>
-            <span>{theme === "light" ? "🌙" : "☀️"}</span>
-            {theme === "light" ? "Dark Mode" : "Light Mode"}
+            {theme === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
           </button>
 
-          <button
-            className={`${styles.btn} ${styles.logout}`}
-            onClick={confirmLogout}
-          >
+          <button className={`${styles.btn} ${styles.logout}`} onClick={confirmLogout}>
             Logout
           </button>
         </div>
+
+        {/* Hamburger Right for Mobile */}
+        <button className={styles.menuIcon} onClick={toggleMenu}>
+          ☰
+        </button>
+
+        {/* Fullscreen Mobile Menu */}
+        <div
+          className={`${styles.mobileMenu} ${isMenuOpen ? styles.open : ""}`}
+        >
+          <button className={styles.closeBtn} onClick={toggleMenu}>
+            ✕
+          </button>
+
+          <div className={styles.menuContent}>
+            <Link
+              href="/expenseForm"
+              className={pathname === "/expenseForm" ? styles.active : ""}
+              onClick={toggleMenu}
+            >
+              Add Expense
+            </Link>
+
+            <Link
+              href="/expenseTable"
+              className={pathname === "/expenseTable" ? styles.active : ""}
+              onClick={toggleMenu}
+            >
+              Table
+            </Link>
+
+            <button className={styles.themeToggleMobile} onClick={toggleTheme}>
+              {theme === "light" ? "Dark Mode" : "Light Mode"}
+            </button>
+
+            <button className={styles.logout} onClick={confirmLogout}>
+              Logout
+            </button>
+          </div>
+        </div>
       </header>
 
-      {/* Confirm Modal */}
       <ConfirmModal
         isOpen={isModalOpen}
         title="Logout"

@@ -7,7 +7,7 @@ const Pagination = ({
   onPageChange,
   windowSize = 3,
 }) => {
-  if (totalPages <= 1) return null;
+  if (totalPages < 1) return null;
 
   const pageNumbers = [];
 
@@ -63,9 +63,8 @@ const Pagination = ({
           <button
             key={idx}
             onClick={() => onPageChange(page)}
-            className={`${styles.pageBtn} ${
-              currentPage === page ? styles.activePage : ""
-            }`}
+            className={`${styles.pageBtn} ${currentPage === page ? styles.activePage : ""
+              }`}
           >
             {page}
           </button>
