@@ -24,13 +24,14 @@ const ExpenseTable = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   // Pagination
-
   const rowsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  const currentRows = getExpenses.slice(indexOfFirstRow, indexOfLastRow);
+  const currentRows = getExpenses.length
+    ? getExpenses.slice(indexOfFirstRow, indexOfLastRow)
+    : [];
   const totalPages = Math.ceil(getExpenses.length / rowsPerPage);
 
   const handlePageChange = (page) => {
@@ -39,7 +40,6 @@ const ExpenseTable = () => {
   };
 
   // Fetch expenses from backend
-
   const getExpense = async () => {
     setLoading(true);
     try {
@@ -56,11 +56,7 @@ const ExpenseTable = () => {
       }
     } catch (error) {
       const { message } = handleAxiosError(error);
-      showAlertMessage({
-        // message: `${message}${status ? ` (Status: ${status})` : ""}`,
-        message: message,
-        type: "error",
-      });
+      showAlertMessage({ message, type: "error" });
     } finally {
       setLoading(false);
     }
@@ -70,7 +66,7 @@ const ExpenseTable = () => {
     getExpense();
   }, []);
 
-  // Pagination use Effect
+  // Pagination useEffect
   useEffect(() => {
     const savedPage = getCookie("currentPage");
     const totalPages = Math.ceil(getExpenses.length / rowsPerPage);
@@ -89,14 +85,9 @@ const ExpenseTable = () => {
   const handleDelete = async (id) => {
     try {
       setLoading(true);
-
-      const res = await axios.delete(`expenseTable/api/${id}`, {
-        data: { id },
-      });
-
+      const res = await axios.delete(`expenseTable/api/${id}`, { data: { id } });
       if (res?.status === 200) {
         showAlertMessage({ message: res.data.message, type: "success" });
-
         setGetExpenses((prev) => {
           const updatedExpenses = prev.filter((exp) => exp._id !== id);
 
@@ -115,11 +106,8 @@ const ExpenseTable = () => {
           let account = 0;
 
           updatedExpenses.forEach((exp) => {
-            if (exp.type === "income") {
-              totalIncome += Number(exp.amount);
-            } else {
-              totalExpense += Number(exp.amount);
-            }
+            if (exp.type === "income") totalIncome += Number(exp.amount);
+            else totalExpense += Number(exp.amount);
 
             if (exp.paymentType === "cash") cash += Number(exp.amount);
             if (exp.paymentType === "account") account += Number(exp.amount);
@@ -136,11 +124,7 @@ const ExpenseTable = () => {
       }
     } catch (error) {
       const { message } = handleAxiosError(error);
-      showAlertMessage({
-        // message: `${message}${status ? ` (Status: ${status})` : ""}`,
-        message: message,
-        type: "error",
-      });
+      showAlertMessage({ message, type: "error" });
     } finally {
       setLoading(false);
     }
@@ -207,9 +191,7 @@ const ExpenseTable = () => {
                   <tr
                     key={row._id}
                     className={
-                      row.type === "income"
-                        ? styles.incomeRow
-                        : styles.expenseRow
+                      row.type === "income" ? styles.incomeRow : styles.expenseRow
                     }
                   >
                     <td data-label="Date">{row.date}</td>
@@ -226,7 +208,6 @@ const ExpenseTable = () => {
                           ✏️
                         </button>
                       </Link>
-
                       <button
                         className={styles.actionBtn}
                         onClick={() => {
@@ -241,7 +222,7 @@ const ExpenseTable = () => {
                 ))
               ) : (
                 <tr className={styles.noDataRow}>
-                  <td colSpan="6">No Data Found</td>
+                  <td colSpan="6">No Expenses Found</td>
                 </tr>
               )}
             </tbody>
@@ -249,7 +230,6 @@ const ExpenseTable = () => {
         </div>
       </div>
 
-      {/* Confirm Modal */}
       <ConfirmModal
         isOpen={isModalOpen}
         title="Delete Expense"
@@ -258,7 +238,6 @@ const ExpenseTable = () => {
         onCancel={() => setModalOpen(false)}
       />
 
-      {/* Pagination */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
