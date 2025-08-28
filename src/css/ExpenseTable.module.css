@@ -1,3 +1,7 @@
+/* ======================= */
+/*       EXPENSE TABLE CSS  */
+/* ======================= */
+
 /* Container */
 .container {
   width: 90%;
@@ -15,22 +19,22 @@
   max-width: 800px;
   margin: 20px auto;
   border-radius: 16px;
-  transition: all 0.3s ease;
   background: var(--card-bg);
   box-shadow: var(--card-shadow);
+  transition: all 0.3s ease;
 }
 
 .balanceSection {
-  gap: 20px;
   display: flex;
-  text-align: center;
   flex-direction: column;
+  gap: 20px;
+  text-align: center;
 }
 
 .balance {
   font-weight: 700;
   font-size: 1.5rem;
-  color: var(--text-primary);
+  color: var(--text-color);
 }
 
 .balanceAmount {
@@ -40,23 +44,24 @@
   color: var(--primary-color);
 }
 
+/* Totals cards */
 .totals {
-  gap: 15px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  gap: 15px;
 }
 
 .totalCard {
   flex: 1 1 45%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 15px 10px;
   border-radius: 12px;
-  align-items: center;
-  flex-direction: column;
   box-shadow: var(--card-shadow);
-  transition: transform 0.2s ease;
   background: var(--card-bg-secondary);
+  transition: transform 0.2s ease;
 }
 
 .totalCard:hover {
@@ -66,7 +71,7 @@
 .label {
   font-weight: 600;
   margin-bottom: 5px;
-  color: var(--text-secondary);
+  color: var(--muted-color);
 }
 
 .incomeAmount {
@@ -81,23 +86,24 @@
   color: var(--error-color);
 }
 
+/* Payment Type cards */
 .paymentType {
-  gap: 15px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  gap: 15px;
 }
 
 .paymentCard {
   flex: 1 1 40%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 12px 10px;
   border-radius: 12px;
-  align-items: center;
-  flex-direction: column;
   box-shadow: var(--card-shadow);
-  transition: transform 0.2s ease;
   background: var(--card-bg-secondary);
+  transition: transform 0.2s ease;
 }
 
 .paymentCard:hover {
@@ -126,11 +132,11 @@
 .table {
   width: 100%;
   min-width: 600px;
-  border-radius: 10px;
   border-collapse: collapse;
-  transition: all 0.3s ease;
+  border-radius: 10px;
   background: var(--card-bg);
   box-shadow: var(--card-shadow);
+  transition: all 0.3s ease;
 }
 
 .table th,
@@ -142,9 +148,9 @@
 }
 
 .table th {
+  background: var(--primary-color);
   color: #fff;
   font-weight: 700;
-  background: var(--primary-color);
 }
 
 .table tr {
@@ -155,14 +161,10 @@
 
 .table tr:hover {
   transform: translateY(-2px);
-  background: var(--hover-bg);
+  background: var(--card-bg-secondary);
 }
 
-/* Alternate row coloring */
-.table tr:nth-child(even) {
-  background-color: var(--row-bg-even);
-}
-
+/* Alternate row colors */
 .incomeRow {
   color: var(--success-color) !important;
   background-color: var(--income-row-bg) !important;
@@ -175,15 +177,15 @@
 
 /* Actions buttons */
 .actionBtn {
-  transition:
-    color 0.3s,
-    transform 0.2s;
   border: none;
   margin: 0 5px;
   cursor: pointer;
   font-size: 18px;
   background: none;
   color: var(--primary-color);
+  transition:
+    color 0.3s,
+    transform 0.2s;
 }
 
 .actionBtn:hover {
@@ -197,75 +199,83 @@
   font-weight: 600;
   text-align: center;
   color: var(--highlight-text);
+  border: none;
+  background: var(--card-bg-secondary);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
 }
 
-/* Mobile & Tablet: card-style rows */
+/* ======================= */
+/* MOBILE & TABLET STYLES   */
+/* ======================= */
 @media (max-width: 768px) {
-  .tableWrapper {
-    overflow-x: auto;
+  .totals,
+  .paymentType {
+    flex-direction: column;
+    gap: 10px;
   }
 
-  .table {
+  .totalCard,
+  .paymentCard {
+    flex: 1 1 100%;
+  }
+
+  .balance {
+    font-size: 1.3rem;
+  }
+
+  .balanceAmount {
+    font-size: 1.7rem;
+  }
+
+  /* Table card style */
+  .tableWrapper table,
+  .tableWrapper tbody,
+  .tableWrapper tr,
+  .tableWrapper td {
+    display: block;
     width: 100%;
-    min-width: auto;
-    border-radius: 0;
   }
 
   .table thead {
     display: none;
   }
 
-  .table,
-  .table tbody,
-  .table tr,
-  .table td {
-    width: 100%;
-    display: block;
-  }
-
   .table tr {
-    padding: 12px 10px;
-    margin-bottom: 18px;
+    margin-bottom: 15px;
     border-radius: 12px;
     box-shadow: var(--card-shadow);
     background: var(--card-bg-secondary);
-    border: 1px solid var(--border-color);
+    padding: 10px;
+    border: 1px solid var(--mobile-border-color);
   }
 
   .table td {
     display: flex;
-    padding: 10px;
-    min-height: 40px;
-    flex-direction: row;
-    color: var(--text-primary);
     justify-content: space-between;
+    padding: 10px;
     border-bottom: 1px solid var(--mobile-border-color);
   }
 
   .table td:last-child {
-    border-bottom: none;
     justify-content: center;
+    border-bottom: none;
   }
 
   .table td::before {
-    width: 120px;
-    flex-shrink: 0;
-    font-weight: 600;
     content: attr(data-label);
-    color: var(--text-secondary);
-  }
-
-  .actionBtn {
-    margin: 0 8px;
+    font-weight: 600;
+    flex-shrink: 0;
+    width: 120px;
+    color: var(--muted-color);
   }
 
   .noDataRow td {
-    border: none;
     display: block;
     text-align: center;
+    border: none;
     padding: 20px;
-    background: var(--card-bg-secondary);
-    border-radius: 12px;
     box-shadow: var(--card-shadow);
+    border-radius: 12px;
   }
 }
