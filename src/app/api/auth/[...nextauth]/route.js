@@ -1,9 +1,9 @@
 import NextAuth from "next-auth";
-import { cookies } from "next/headers";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import { cookies } from "next/headers";
+import axios from "axios";
 import { apiConfig } from "@/config/apiConfig";
-import axiosClient from "@/config/axiosClient";
 
 export const authOptions = {
   providers: [
@@ -15,28 +15,21 @@ export const authOptions = {
       },
       async authorize(credentials) {
         try {
-          const res = await axiosClient.post(
-            `${apiConfig.baseUrl}${apiConfig.login}`,
-            {
-              email: credentials?.email,
-              password: credentials?.password,
-            }
-          );
+          const res = await axios.post(`${apiConfig.baseUrl}${apiConfig.login}`, {
+            email: credentials.email,
+            password: credentials.password,
+          });
 
-          if (res?.status === 200) {
-            // Set cookies exactly as before
+          if (res.status === 200) {
             cookies().set("sessionToken", res.data.token, { secure: true, maxAge: 2 * 24 * 60 * 60 });
             cookies().set("firstName", res.data.user.firstName, { maxAge: 2 * 24 * 60 * 60 });
             cookies().set("lastName", res.data.user.lastName, { maxAge: 2 * 24 * 60 * 60 });
-
             return { ...res.data.user, message: res.data.message };
           } else {
-            throw new Error(res?.data?.message || "Login failed");
+            throw new Error(res.data?.message || "Login failed");
           }
         } catch (error) {
-          const backendMessage =
-            error?.response?.data?.message || error.message || "Invalid email or password";
-          throw new Error(backendMessage);
+          throw new Error(error?.response?.data?.message || error.message || "Login failed");
         }
       },
     }),
@@ -44,14 +37,32 @@ export const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      authorization: { params: { prompt: "consent", access_type: "offline", response_type: "code" } },
+      authorization: {
+        params: { prompt: "consent", access_type: "offline", response_type: "code" },
+      },
     }),
   ],
 
-  pages: {
-    signIn: "/auth/login",
+  callbacks: {
+    async signIn({ user, account, profile }) {
+      // 🔹 Google login
+      if (account.provider === "google") {
+        // Backend call to create user or get JWT
+        const res = await axios.post(`${apiConfig.baseUrl}${apiConfig.googleLogin}`, {
+          email: profile.email,
+          firstName: profile.given_name,
+          lastName: profile.family_name,
+        });
+
+        if (res.status === 200) {
+          cookies().set("sessionToken", res.data.token, { secure: true, maxAge: 2 * 24 * 60 * 60 });
+        }
+      }
+      return true;
+    },
   },
 
+  pages: { signIn: "/auth/login" },
   secret: process.env.NEXTAUTH_SECRET,
 };
 

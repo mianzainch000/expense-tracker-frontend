@@ -6,18 +6,25 @@ const axiosClient = axios.create({
   baseURL: apiConfig.baseUrl,
   responseType: "json",
   validateStatus: () => true,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  headers: { "Content-Type": "application/json" },
 });
 
-axiosClient.interceptors.request.use(function (config) {
-  const sessionInfo = cookies().get("sessionToken");
+axiosClient.interceptors.request.use((config) => {
+  let token;
 
-  if (sessionInfo?.value) {
-    const token = sessionInfo?.value;
-    config.headers["Authorization"] = `Bearer ${token}`;
+  // Server-side
+  try {
+    token = cookies().get("sessionToken")?.value;
+  } catch (err) {}
+
+  // Client-side
+  if (!token && typeof window !== "undefined") {
+    const match = document.cookie.match(/sessionToken=([^;]+)/);
+    token = match ? match[1] : null;
   }
+
+  if (token) config.headers["Authorization"] = `Bearer ${token}`;
+
   return config;
 });
 

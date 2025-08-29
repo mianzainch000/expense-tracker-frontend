@@ -4,6 +4,7 @@ export const apiConfig = {
   signup: "signup",
   forgotPassword: "forgotPassword",
   resetPassword: "resetPassword",
+  googleLogin: "googleLogin",
   expenseForm: {
     post: "postExpense",
     update: "updateExpense",
