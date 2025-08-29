@@ -9,7 +9,7 @@ import ConfirmModal from "@/components/ConfirmModal";
 import { useRouter, usePathname } from "next/navigation";
 import { setCookie, deleteCookie, getCookie } from "cookies-next";
 
-const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
+const Header = ({ initialTheme }) => {
   const router = useRouter();
   const pathname = usePathname();
   const showAlertMessage = useSnackbar();
@@ -63,11 +63,6 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
           <Link href="/">
             <Image src="/logo.png" alt="Logo" width={50} height={50} />
           </Link>
-        </div>
-
-        {/* Desktop Welcome */}
-        <div className={styles.centerText}>
-          Welcome {initialFirstName || "Guest"} {initialLastName || ""}
         </div>
 
         {/* Desktop Buttons */}
