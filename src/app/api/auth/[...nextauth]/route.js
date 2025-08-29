@@ -44,7 +44,7 @@ export const authOptions = {
   ],
 
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ account, profile }) {
       // 🔹 Google login
       if (account.provider === "google") {
         // Backend call to create user or get JWT
