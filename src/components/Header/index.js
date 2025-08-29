@@ -1,13 +1,13 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import { signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 import styles from "@/css/Header.module.css";
 import { useSnackbar } from "@/components/Snackbar";
 import ConfirmModal from "@/components/ConfirmModal";
 import { useRouter, usePathname } from "next/navigation";
 import { setCookie, deleteCookie, getCookie } from "cookies-next";
-import { signOut } from "next-auth/react";
 
 const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
   const router = useRouter();
@@ -40,7 +40,7 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
     deleteCookie("sessionToken");
     deleteCookie("firstName");
     deleteCookie("lastName");
-    signOut({ callbackUrl: "/" })
+    signOut({ callbackUrl: "/" });
     showAlertMessage({
       message: "✅ Logout successful",
       type: "success",
@@ -74,16 +74,18 @@ const Header = ({ initialTheme, initialFirstName, initialLastName }) => {
         <div className={styles.actions}>
           <Link
             href="/expenseForm"
-            className={`${styles.btn} ${pathname === "/expenseForm" ? styles.active : ""
-              }`}
+            className={`${styles.btn} ${
+              pathname === "/expenseForm" ? styles.active : ""
+            }`}
           >
             Add Expense
           </Link>
 
           <Link
             href="/expenseTable"
-            className={`${styles.btn} ${pathname === "/expenseTable" ? styles.active : ""
-              }`}
+            className={`${styles.btn} ${
+              pathname === "/expenseTable" ? styles.active : ""
+            }`}
           >
             Table
           </Link>

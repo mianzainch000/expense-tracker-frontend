@@ -64,7 +64,8 @@ const Login = () => {
     } catch (error) {
       console.log(error);
       showAlertMessage({
-        message: error.response?.data?.message || error.message || "Server error",
+        message:
+          error.response?.data?.message || error.message || "Server error",
         type: "error",
       });
     } finally {
@@ -126,10 +127,7 @@ const Login = () => {
             </button>
           </form>
 
-          <button
-            onClick={loginWithGoogle}
-            className={styles.googleBtn}
-          >
+          <button onClick={loginWithGoogle} className={styles.googleBtn}>
             Login with Google
           </button>
 
