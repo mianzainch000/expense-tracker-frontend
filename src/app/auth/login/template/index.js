@@ -128,6 +128,7 @@ const Login = () => {
           </form>
 
           <button onClick={loginWithGoogle} className={styles.googleBtn}>
+            <Image src="/google-icon.svg" alt="Google" width={20} height={20} />
             Login with Google
           </button>
 
