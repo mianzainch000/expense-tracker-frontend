@@ -61,26 +61,29 @@ const ExpenseForm = ({ expenseData }) => {
 
     if (!validate()) return;
 
-    if (editId) {
-      await updatetData();
-    } else {
-      await postData();
-    }
+    submitData();
   }
 
-  const postData = async () => {
+  const submitData = async () => {
     setLoading(true);
 
     try {
-      const res = await axios.post("expenseForm/api", {
-        date,
-        description,
-        amount,
-        paymentType,
-        type,
+      const url = editId ? `api/${editId}` : "expenseForm/api";
+      const method = editId ? "put" : "post";
+
+      const res = await axios({
+        method: method,
+        url: url,
+        data: {
+          date,
+          description,
+          amount,
+          paymentType,
+          type,
+        },
       });
 
-      if (res?.status === 201) {
+      if ((editId && res?.status === 200) || (!editId && res?.status === 201)) {
         showAlertMessage({
           message: res?.data?.message,
           type: "success",
@@ -92,8 +95,10 @@ const ExpenseForm = ({ expenseData }) => {
         setAmount("");
         setPaymentType("");
         setType("");
+        if (editId) setEditId("");
+
+        if (editId) router.push("/expenseTable"); // redirect only after update
       } else {
-        // Backend sent error but status is not 201
         showAlertMessage({
           message:
             res?.data?.errors || res?.data?.message || "Something went wrong",
@@ -103,50 +108,6 @@ const ExpenseForm = ({ expenseData }) => {
     } catch (error) {
       const { message } = handleAxiosError(error);
       showAlertMessage({
-        // message: `${message}${status ? ` (Status: ${status})` : ""}`,
-        message: message,
-        type: "error",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const updatetData = async () => {
-    setLoading(true);
-    try {
-      let res = await axios.put(`api/${editId}`, {
-        date,
-        description,
-        amount,
-        paymentType,
-        type,
-      });
-      if (res?.status === 200) {
-        showAlertMessage({
-          message: res?.data?.message,
-          type: "success",
-        });
-        router.push("/expenseTable");
-        setDate("");
-        setDescription("");
-        setAmount("");
-        setPaymentType("");
-        setType("");
-        setEditId("");
-      } else {
-        showAlertMessage({
-          message:
-            res?.data?.data?.errors ||
-            res?.data?.message ||
-            "Something went wrong",
-          type: "error",
-        });
-      }
-    } catch (error) {
-      const { message } = handleAxiosError(error);
-      showAlertMessage({
-        // message: `${message}${status ? ` (Status: ${status})` : ""}`,
         message: message,
         type: "error",
       });

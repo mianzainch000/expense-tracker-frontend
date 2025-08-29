@@ -1,7 +1,9 @@
 .header {
+  top: 0;
   display: flex;
   padding: 20px;
   flex-wrap: wrap;
+  position: sticky;
   align-items: center;
   border-radius: 12px;
   color: var(--button-text);
@@ -211,6 +213,11 @@
 @media (max-width: 768px) {
   .menuIcon {
     display: block;
+  }
+
+  .header {
+    top: auto;
+    position: static;
   }
 
   .actions {
