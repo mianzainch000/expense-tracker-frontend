@@ -5,11 +5,9 @@ import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import Loader from "@/components/Loader";
 import styles from "@/css/Auth.module.css";
-import { useRouter } from "next/navigation";
 import { useSnackbar } from "@/components/Snackbar";
 
 const Login = () => {
-  const router = useRouter();
   const showAlertMessage = useSnackbar();
 
   const [email, setEmail] = useState("");
@@ -18,7 +16,6 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   function validate() {
-    // Check if email is empty or invalid
     if (!email) {
       showAlertMessage({ message: "Email is required", type: "error" });
       return false;
@@ -27,42 +24,37 @@ const Login = () => {
       return false;
     }
 
-    // Check if password is empty
     if (!password) {
       showAlertMessage({ message: "Password is required", type: "error" });
       return false;
     }
-    return true; // All validations passed
+    return true;
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (!validate()) return;
 
-    // Api call
-
-    await Login();
+    await loginWithCredentials();
   }
 
-  const Login = async () => {
+  const loginWithCredentials = async () => {
     try {
       setLoading(true);
       const res = await signIn("credentials", {
-        email: email,
-        password: password,
-        redirect: false,
+        email,
+        password,
+        redirect: false, // client-side redirect handle karenge
       });
 
       if (res?.ok) {
-        showAlertMessage({
-          message: "✅ Login successful",
-          type: "success",
-        });
+        showAlertMessage({ message: "✅ Login successful", type: "success" });
 
         setEmail("");
         setPassword("");
 
-        router.push("/expenseForm");
+        // Force reload so middleware detects cookie
+        window.location.href = "/expenseForm";
       } else {
         showAlertMessage({
           message: `❌ ${res?.error}`,
@@ -71,21 +63,19 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error);
-
-      if (error instanceof ReferenceError) {
-        showAlertMessage({
-          message: `Missing dependency: ${error.message}`,
-          type: "error",
-        });
-      } else {
-        showAlertMessage({
-          message: error.response?.data?.message || "Server error",
-          type: "error",
-        });
-      }
+      showAlertMessage({
+        message: error.response?.data?.message || error.message || "Server error",
+        type: "error",
+      });
     } finally {
       setLoading(false);
     }
+  };
+
+  const loginWithGoogle = async () => {
+    setLoading(true);
+    await signIn("google", { callbackUrl: "/expenseForm" });
+    setLoading(false);
   };
 
   return (
@@ -100,7 +90,6 @@ const Login = () => {
           <h2 className={styles.title}>Login</h2>
 
           <form onSubmit={handleSubmit} className={styles.form}>
-            {/* Email */}
             <input
               type="email"
               placeholder="Email"
@@ -109,7 +98,6 @@ const Login = () => {
               className={styles.inputField}
             />
 
-            {/* Password */}
             <div className={styles.passwordWrapper}>
               <input
                 type={showPassword ? "text" : "password"}
@@ -126,18 +114,27 @@ const Login = () => {
                 {showPassword ? "👁️‍🗨️" : "👁️"}
               </button>
             </div>
+
             <div className={styles.forgotWrapper}>
               <Link href="/auth/forgotPassword" className={styles.forgotLink}>
                 Forgot Password?
               </Link>
             </div>
+
             <button type="submit" className={styles.submitBtn}>
               Sign In
             </button>
           </form>
 
+          <button
+            onClick={loginWithGoogle}
+            className={styles.googleBtn}
+          >
+            Login with Google
+          </button>
+
           <p className={styles.loginText}>
-            Create new Account ? <Link href="/auth/signup">signup</Link>
+            Create new Account? <Link href="/auth/signup">Signup</Link>
           </p>
         </div>
       </div>
