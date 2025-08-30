@@ -37,10 +37,10 @@ const Header = ({ initialTheme }) => {
   };
 
   const handleConfirm = () => {
-    deleteCookie("sessionToken");
-    deleteCookie("firstName");
-    deleteCookie("lastName");
-    signOut({ callbackUrl: "/" });
+    deleteCookie("sessionToken", { path: "/" });
+    deleteCookie("firstName", { path: "/" });
+    deleteCookie("lastName", { path: "/" });
+    signOut({ callbackUrl: "/" }, { path: "/" });
     showAlertMessage({
       message: "✅ Logout successful",
       type: "success",
