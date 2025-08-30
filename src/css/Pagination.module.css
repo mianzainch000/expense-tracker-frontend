@@ -1,0 +1,63 @@
+.pagination {
+  gap: 8px;
+  display: flex;
+  margin: 20px 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pageBtn {
+  gap: 4px;
+  border: none;
+  display: flex;
+  min-width: 36px;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 12px;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+}
+
+.pageBtn:hover {
+  color: var(--button-text);
+  transform: translateY(-2px);
+  background: var(--primary-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.pageBtn:disabled {
+  opacity: 0.5;
+  box-shadow: none;
+  cursor: not-allowed;
+  color: var(--muted-color);
+  background: var(--bg-color);
+}
+
+.activePage {
+  font-weight: 700;
+  color: var(--button-text);
+  background: var(--success-color);
+  box-shadow: 0 0 8px var(--active-shadow);
+}
+
+/* Dots style ("...") */
+.pageBtn[style] {
+  cursor: default;
+  box-shadow: none;
+  background: transparent;
+  color: var(--muted-color);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .pageBtn {
+    min-width: 30px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+}
