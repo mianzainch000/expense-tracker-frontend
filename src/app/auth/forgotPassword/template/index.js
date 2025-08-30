@@ -8,15 +8,15 @@ import styles from "@/css/Auth.module.css";
 import { apiConfig } from "@/config/apiConfig";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
+import { useRouter } from "next/navigation";
 
-const ForgortPassword = () => {
+const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   const showAlertMessage = useSnackbar();
 
   function validate() {
-    // Check if email is empty or invalid
     if (!email) {
       showAlertMessage({ message: "Email is required", type: "error" });
       return false;
@@ -24,15 +24,12 @@ const ForgortPassword = () => {
       showAlertMessage({ message: "Enter a valid email", type: "error" });
       return false;
     }
-    return true; // All validations passed
+    return true;
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (!validate()) return;
-
-    // Api call
-
     await ForgotPasswordApi();
   }
 
@@ -41,16 +38,15 @@ const ForgortPassword = () => {
       setLoading(true);
       const res = await axios.post(
         `${apiConfig.baseUrl}${apiConfig.forgotPassword}`,
-        { email },
+        { email }
       );
-      // let res = await axios.post("forgotPassword/api", { email });
-
       if (res?.status === 200) {
         showAlertMessage({
           message: res?.data?.message,
           type: "success",
         });
         setEmail("");
+        router.push("/auth/resetPassword");
       } else {
         showAlertMessage({
           message: res?.data.message,
@@ -60,14 +56,14 @@ const ForgortPassword = () => {
     } catch (error) {
       const { message } = handleAxiosError(error);
       showAlertMessage({
-        // message: `${message}${status ? ` (Status: ${status})` : ""}`,
-        message: message,
+        message,
         type: "error",
       });
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <>
       {loading && <Loader />}
@@ -76,11 +72,8 @@ const ForgortPassword = () => {
           <div className={styles.logoWrapper}>
             <Image src="/logo.png" alt="Logo" width={80} height={80} />
           </div>
-
           <h2 className={styles.title}>Forgot Password</h2>
-
           <form onSubmit={handleSubmit} className={styles.form}>
-            {/* Email */}
             <input
               type="email"
               placeholder="Email"
@@ -89,12 +82,11 @@ const ForgortPassword = () => {
               className={styles.inputField}
             />
             <button type="submit" className={styles.submitBtn}>
-              Reset Link
+              Send OTP
             </button>
           </form>
-
           <p className={styles.loginText}>
-            <Link href="/"> Go to login </Link>
+            <Link href="/">Go to login</Link>
           </p>
         </div>
       </div>
@@ -102,4 +94,4 @@ const ForgortPassword = () => {
   );
 };
 
-export default ForgortPassword;
+export default ForgotPassword;

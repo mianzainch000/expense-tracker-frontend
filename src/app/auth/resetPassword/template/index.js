@@ -6,38 +6,30 @@ import React, { useState } from "react";
 import Loader from "@/components/Loader";
 import styles from "@/css/Auth.module.css";
 import { apiConfig } from "@/config/apiConfig";
-import { useSearchParams } from "next/navigation";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
 
 const ResetPassword = () => {
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const searchParams = useSearchParams();
-  const token = searchParams?.get("token") || "";
   const showAlertMessage = useSnackbar();
 
   const validate = () => {
-    if (!password) {
-      showAlertMessage({ message: "Password is required", type: "error" });
-      return false;
-    }
-    if (!confirmPassword) {
-      showAlertMessage({
-        message: "Confirm Password is required",
-        type: "error",
-      });
-      return false;
-    }
-    if (password !== confirmPassword) {
-      showAlertMessage({ message: "Passwords do not match", type: "error" });
-      return false;
-    }
+    if (!email) return showAlert("Email is required");
+    if (!otp) return showAlert("OTP is required");
+    if (!password) return showAlert("Password is required");
+    if (password !== confirmPassword)
+      return showAlert("Passwords do not match");
     return true;
+  };
+
+  const showAlert = (message) => {
+    showAlertMessage({ message, type: "error" });
+    return false;
   };
 
   const handleSubmit = async (e) => {
@@ -50,17 +42,16 @@ const ResetPassword = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        `${apiConfig.baseUrl}${apiConfig.resetPassword}/${token}`,
-        {
-          newPassword: password,
-          token: token,
-        },
+        `${apiConfig.baseUrl}${apiConfig.resetPassword}`,
+        { email, otp, newPassword: password },
       );
       if (res?.status === 200) {
         showAlertMessage({
           message: res?.data?.message,
           type: "success",
         });
+        setEmail("");
+        setOtp("");
         setPassword("");
         setConfirmPassword("");
       } else {
@@ -73,8 +64,7 @@ const ResetPassword = () => {
     } catch (error) {
       const { message } = handleAxiosError(error);
       showAlertMessage({
-        // message: `${message}${status ? ` (Status: ${status})` : ""}`,
-        message: message,
+        message,
         type: "error",
       });
     } finally {
@@ -90,45 +80,40 @@ const ResetPassword = () => {
           <div className={styles.logoWrapper}>
             <Image src="/logo.png" alt="Logo" width={80} height={80} />
           </div>
-
-          <h2 className={styles.title}>Reset Password</h2>
+          <h2 className={styles.title}>Reset Password (OTP)</h2>
 
           <form onSubmit={handleSubmit} className={styles.form}>
-            {/* Password */}
-            <div className={styles.passwordWrapper}>
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className={styles.inputField}
-              />
-              <button
-                type="button"
-                className={styles.toggleBtn}
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? "👁️‍🗨️" : "👁️"}
-              </button>
-            </div>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={styles.inputField}
+            />
 
-            {/* Confirm Password */}
-            <div className={styles.passwordWrapper}>
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className={styles.inputField}
-              />
-              <button
-                type="button"
-                className={styles.toggleBtn}
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              >
-                {showConfirmPassword ? "👁️‍🗨️" : "👁️"}
-              </button>
-            </div>
+            <input
+              type="text"
+              placeholder="Enter OTP"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              className={styles.inputField}
+            />
+
+            <input
+              type="password"
+              placeholder="New Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={styles.inputField}
+            />
+
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className={styles.inputField}
+            />
 
             <button type="submit" className={styles.submitBtn}>
               Reset Password
