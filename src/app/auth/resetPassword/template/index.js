@@ -10,11 +10,13 @@ import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
 
 const ResetPassword = () => {
-  const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const showAlertMessage = useSnackbar();
 
@@ -99,22 +101,41 @@ const ResetPassword = () => {
               className={styles.inputField}
             />
 
-            <input
-              type="password"
-              placeholder="New Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={styles.inputField}
-            />
+            {/* Password */}
+            <div className={styles.passwordWrapper}>
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={styles.inputField}
+              />
+              <button
+                type="button"
+                className={styles.toggleBtn}
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "👁️‍🗨️" : "👁️"}
+              </button>
+            </div>
 
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className={styles.inputField}
-            />
-
+            {/* Confirm Password */}
+            <div className={styles.passwordWrapper}>
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className={styles.inputField}
+              />
+              <button
+                type="button"
+                className={styles.toggleBtn}
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? "👁️‍🗨️" : "👁️"}
+              </button>
+            </div>
             <button type="submit" className={styles.submitBtn}>
               Reset Password
             </button>

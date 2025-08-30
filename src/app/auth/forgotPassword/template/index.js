@@ -5,10 +5,10 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Loader from "@/components/Loader";
 import styles from "@/css/Auth.module.css";
+import { useRouter } from "next/navigation";
 import { apiConfig } from "@/config/apiConfig";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
-import { useRouter } from "next/navigation";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -38,7 +38,7 @@ const ForgotPassword = () => {
       setLoading(true);
       const res = await axios.post(
         `${apiConfig.baseUrl}${apiConfig.forgotPassword}`,
-        { email }
+        { email },
       );
       if (res?.status === 200) {
         showAlertMessage({

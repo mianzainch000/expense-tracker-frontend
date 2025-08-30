@@ -1,4 +1,21 @@
-// Ya fu/nction har trah ka backend ka errors ko show karwa dey ga
+const extractErrorMessages = (err) => {
+  if (!err) return "";
+
+  if (typeof err === "string") {
+    return err;
+  }
+
+  if (Array.isArray(err)) {
+    return err.map(extractErrorMessages).join(", ");
+  }
+
+  if (typeof err === "object") {
+    if (err.message) return extractErrorMessages(err.message);
+    return Object.values(err).map(extractErrorMessages).join(", ");
+  }
+
+  return String(err);
+};
 
 const handleAxiosError = (error) => {
   let message = "Server error";
@@ -7,26 +24,28 @@ const handleAxiosError = (error) => {
   // Missing dependency
   if (error instanceof ReferenceError) {
     message = `Missing dependency: ${error.message}`;
-  } else if (error.response?.data) {
+  }
+  // Axios response with data
+  else if (error.response?.data) {
     const data = error.response.data;
     status = error.response.status;
 
-    // ✅ check nested "data.message"
     if (data.message) {
-      message = data.message;
+      message = extractErrorMessages(data.message);
     } else if (data.data?.message) {
-      message = data.data.message;
+      message = extractErrorMessages(data.data.message);
     } else if (data.errors) {
-      message =
-        typeof data.errors === "string"
-          ? data.errors
-          : JSON.stringify(data.errors);
+      message = extractErrorMessages(data.errors);
     } else {
-      message = JSON.stringify(data);
+      message = extractErrorMessages(data);
     }
-  } else if (error.request) {
+  }
+  // Axios request made but no response
+  else if (error.request) {
     message = "No response from server. Please try again later.";
-  } else if (error.message) {
+  }
+  // Other JS errors
+  else if (error.message) {
     message = error.message;
   }
 
