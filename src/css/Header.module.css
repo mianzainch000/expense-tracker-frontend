@@ -1,0 +1,239 @@
+.header {
+  top: 0;
+  display: flex;
+  padding: 20px;
+  flex-wrap: wrap;
+  position: sticky;
+  align-items: center;
+  border-radius: 12px;
+  color: var(--button-text);
+  background: var(--header-bg);
+  justify-content: space-between;
+  box-shadow: var(--card-shadow);
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.centerText {
+  font-size: 20px;
+  text-align: center;
+  font-size: 30px !important;
+  margin-top: 20px !important;
+  font-weight: bolder !important;
+}
+
+/* =======================
+   DESKTOP BUTTONS
+======================= */
+.actions {
+  gap: 12px;
+  display: flex;
+}
+
+.btn {
+  gap: 6px;
+  border: none;
+  display: flex;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  border-radius: 12px;
+  align-items: center;
+  text-decoration: none;
+  justify-content: center;
+  background: var(--btn-bg);
+  color: var(--button-text);
+  transition: all 0.3s ease;
+  box-shadow: var(--button-shadow);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  background: var(--btn-hover);
+}
+
+.active {
+  font-weight: 700;
+  color: var(--button-text);
+  transform: translateY(-1px);
+  background: var(--success-color);
+  box-shadow: 0 0 8px var(--active-shadow);
+}
+
+.logout {
+  font-weight: 500;
+  color: var(--button-text);
+  background: var(--logout-bg);
+}
+
+.logout:hover {
+  transform: translateY(-2px);
+  background: var(--logout-hover);
+}
+
+.toggleTheme {
+  gap: 8px;
+  display: flex;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 8px 14px;
+  text-align: center;
+  border-radius: 20px;
+  align-items: center;
+  transition: all 0.3s ease;
+  background: var(--bg-color);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.toggleTheme:hover {
+  color: var(--button-text);
+  transform: translateY(-2px);
+  background: var(--primary-color);
+}
+
+/* =======================
+   HAMBURGER ICON
+======================= */
+.menuIcon {
+  border: none;
+  color: white;
+  display: none;
+  cursor: pointer;
+  background: none;
+  font-size: 1.8rem;
+}
+
+/* =======================
+   FULLSCREEN MOBILE MENU (RIGHT SLIDE)
+======================= */
+.mobileMenu {
+  transition:
+    right 0.3s ease,
+    background 0.3s ease;
+  top: 0;
+  gap: 20px;
+  width: 100%;
+  right: -100%;
+  height: 100%;
+  display: flex;
+  z-index: 9999;
+  position: fixed;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--header-bg);
+}
+
+.mobileMenu.open {
+  right: 0;
+}
+
+.closeBtn {
+  top: 20px;
+  right: 20px;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  background: none;
+  position: absolute;
+}
+
+.menuContent {
+  gap: 20px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}
+
+/* =======================
+   MOBILE MENU BUTTONS SAME AS DESKTOP
+======================= */
+.mobileMenu .menuContent a,
+.mobileMenu .menuContent button {
+  gap: 6px !important;
+  all: unset !important;
+  border: none !important;
+  display: flex !important;
+  cursor: pointer !important;
+  font-weight: 500 !important;
+  padding: 8px 14px !important;
+  font-size: 0.95rem !important;
+  border-radius: 12px !important;
+  align-items: center !important;
+  text-decoration: none !important;
+  justify-content: center !important;
+  background: var(--btn-bg) !important;
+  color: var(--button-text) !important;
+  transition: all 0.3s ease !important;
+  box-shadow: var(--button-shadow) !important;
+}
+
+.mobileMenu .menuContent a:hover,
+.mobileMenu .menuContent button:hover {
+  transform: translateY(-2px) !important;
+  background: var(--btn-hover) !important;
+}
+
+/* Logout overrides */
+.mobileMenu .menuContent .logout {
+  background: var(--logout-bg) !important;
+}
+
+.mobileMenu .menuContent .logout:hover {
+  background: var(--logout-hover) !important;
+}
+
+/* Theme toggle overrides */
+.mobileMenu .menuContent .toggleTheme {
+  background: var(--bg-color) !important;
+  color: var(--primary-color) !important;
+  border: 1px solid var(--primary-color) !important;
+}
+
+.mobileMenu .menuContent .toggleTheme:hover {
+  color: var(--button-text) !important;
+  background: var(--primary-color) !important;
+}
+
+/* =======================
+   RESPONSIVE
+======================= */
+@media (max-width: 1024px) {
+  .actions {
+    display: flex;
+  }
+}
+
+@media (max-width: 768px) {
+  .menuIcon {
+    display: block;
+  }
+
+  .header {
+    top: auto;
+    position: static;
+  }
+
+  .actions {
+    display: none;
+  }
+
+  .centerText {
+    font-size: 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobileMenu .menuContent a,
+  .mobileMenu .menuContent button {
+    width: 90% !important;
+    font-size: 1.05rem !important;
+  }
+}

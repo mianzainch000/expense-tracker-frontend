@@ -1,0 +1,273 @@
+.container {
+  width: 90%;
+  padding: 15px;
+  margin: 20px auto;
+  border-radius: 12px;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+}
+
+/* Balance & Totals */
+
+.balanceContainer {
+  width: 95%;
+  padding: 20px;
+  max-width: 800px;
+  margin: 20px auto;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+}
+
+.balanceSection {
+  gap: 20px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}
+
+.balance {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
+.balanceAmount {
+  display: block;
+  font-size: 2rem;
+  margin-top: 5px;
+  color: var(--primary-color);
+}
+
+.totals {
+  gap: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.totalCard {
+  flex: 1 1 45%;
+  display: flex;
+  padding: 15px 10px;
+  border-radius: 12px;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s ease;
+  background: var(--card-bg-secondary);
+}
+
+.totalCard:hover {
+  transform: translateY(-5px);
+}
+
+.label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: var(--text-secondary);
+}
+
+.incomeAmount {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--success-color);
+}
+
+.expenseAmount {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--error-color);
+}
+
+.paymentType {
+  gap: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.paymentCard {
+  flex: 1 1 40%;
+  display: flex;
+  padding: 12px 10px;
+  border-radius: 12px;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s ease;
+  background: var(--card-bg-secondary);
+}
+
+.paymentCard:hover {
+  transform: translateY(-3px);
+}
+
+.cashAmount {
+  color: #f0b90b;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.accountAmount {
+  color: #3b82f6;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* Responsive for small screens */
+@media (max-width: 600px) {
+  .totals,
+  .paymentType {
+    gap: 10px;
+    flex-direction: column;
+  }
+
+  .totalCard,
+  .paymentCard {
+    flex: 1 1 100%;
+  }
+
+  .balance {
+    font-size: 1.3rem;
+  }
+
+  .balanceAmount {
+    font-size: 1.7rem;
+  }
+}
+
+/* Table Wrapper */
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 25px;
+}
+
+.table {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  border-collapse: collapse;
+  transition: all 0.3s ease;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+}
+
+.table th,
+.table td {
+  padding: 14px 12px;
+  text-align: center;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table th {
+  color: #fff;
+  font-weight: 700;
+  background: var(--primary-color);
+}
+
+.table tr {
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.table tr:hover {
+  transform: translateY(-2px);
+  background: var(--hover-bg);
+}
+
+/* Alternate row coloring */
+.table tr:nth-child(even) {
+  background-color: var(--row-bg-even);
+}
+
+.incomeRow {
+  color: var(--success-color) !important;
+  background-color: var(--income-row-bg) !important;
+}
+
+.expenseRow {
+  color: var(--error-color) !important;
+  background-color: var(--expense-row-bg) !important;
+}
+
+/* Actions buttons */
+.actionBtn {
+  border: none;
+  margin: 0 5px;
+  cursor: pointer;
+  font-size: 18px;
+  background: none;
+  transition: color 0.3s;
+  color: var(--primary-color);
+}
+
+.actionBtn:hover {
+  transform: scale(1.1);
+  color: var(--primary-hover);
+}
+
+/* No Data row */
+.noDataRow td {
+  padding: 18px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--highlight-text);
+}
+
+/* 📱 Mobile & Tablet: convert table → cards */
+@media (max-width: 768px) {
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    width: 100%;
+    display: block;
+  }
+
+  .table tr {
+    padding: 12px 10px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
+  }
+
+  .table td {
+    display: flex;
+    padding: 10px 8px;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--mobile-border-color);
+  }
+
+  .table td:last-child {
+    border-bottom: none;
+    justify-content: center;
+  }
+
+  .table td::before {
+    flex: 1;
+    font-weight: 600;
+    text-align: left;
+    content: attr(data-label);
+    color: var(--highlight-text);
+  }
+
+  .actionBtn {
+    margin: 0 8px;
+  }
+
+  .noDataRow td {
+    border: none;
+    display: block;
+    text-align: center;
+  }
+}
