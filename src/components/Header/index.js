@@ -30,22 +30,28 @@ const Header = ({ initialTheme }) => {
     document.documentElement.setAttribute("data-theme", newTheme);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
+    // 1. Apni custom cookies delete karein
     deleteCookie("sessionToken", { path: "/" });
     deleteCookie("firstName", { path: "/" });
     deleteCookie("lastName", { path: "/" });
-    signOut({ callbackUrl: "/" }, { path: "/" });
+
+    // 2. NextAuth SignOut (Bina page refresh ke)
+    // redirect: false karne se page reload nahi hoga aur theme change nahi hogi
+    await signOut({ redirect: false });
+
     showAlertMessage({
       message: "✅ Logout successful",
       type: "success",
     });
 
-    setTheme("light");
-    document.documentElement.setAttribute("data-theme", "light");
-
     setModalOpen(false);
+
+    // 3. Smooth Redirection
     router.push("/");
+    router.refresh(); // Taake middleware update ho jaye
   };
+
   return (
     <>
       <header className={styles.header}>

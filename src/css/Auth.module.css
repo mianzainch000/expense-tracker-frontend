@@ -4,7 +4,11 @@
   min-height: 100dvh;
   align-items: center;
   justify-content: center;
-  background: var(--gradient-bg);
+  background: linear-gradient(
+    135deg,
+    var(--secondary-color),
+    rgba(172, 182, 229, 1)
+  );
 }
 
 .card {
@@ -13,8 +17,8 @@
   padding: 40px 30px;
   text-align: center;
   border-radius: 12px;
-  background: var(--card-bg);
-  box-shadow: var(--card-shadow);
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .logoWrapper {
@@ -25,7 +29,7 @@
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 25px;
-  color: var(--highlight-text);
+  color: rgba(51, 51, 51, 1);
 }
 
 .form {
@@ -41,12 +45,12 @@
   transition: 0.3s;
   padding: 12px 15px;
   border-radius: 8px;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(209, 213, 219, 1);
 }
 
 .inputField:focus {
-  border-color: var(--secondary-color);
-  box-shadow: 0 0 5px var(--focus-shadow);
+  border-color: rgba(116, 235, 213, 1);
+  box-shadow: 0 0 5px rgba(116, 235, 213, 0.5);
 }
 
 .passwordWrapper {
@@ -74,24 +78,24 @@
   transition: 0.3s;
   font-weight: bold;
   border-radius: 8px;
-  color: var(--button-text);
-  background: var(--secondary-color);
+  color: rgba(255, 255, 255, 1);
+  background: rgba(116, 235, 213, 1);
 }
 
 .submitBtn:hover {
-  background: var(--secondary-hover);
+  background: rgba(103, 217, 199, 1);
 }
 
 .loginText {
   font-size: 14px;
   margin-top: 20px;
-  color: var(--muted-color);
+  color: rgba(107, 114, 128, 1);
 }
 
 .loginText a {
   font-weight: bold;
   text-decoration: none;
-  color: var(--secondary-color);
+  color: rgba(116, 235, 213, 1);
 }
 
 .forgotWrapper {
@@ -104,7 +108,7 @@
   font-size: 14px;
   cursor: pointer;
   text-decoration: none;
-  color: var(--primary-hover);
+  color: rgba(21, 101, 192, 1);
 }
 
 .forgotLink:hover {

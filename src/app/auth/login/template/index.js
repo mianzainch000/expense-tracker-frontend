@@ -75,7 +75,7 @@ const Login = () => {
 
   const loginWithGoogle = async () => {
     setLoading(true);
-    await signIn("google", { callbackUrl: "/expenseForm" });
+    await signIn("google", { callbackUrl: "/expenseTable" });
     setLoading(false);
   };
 
