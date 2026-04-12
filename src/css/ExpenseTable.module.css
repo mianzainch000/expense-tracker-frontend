@@ -116,6 +116,52 @@
   font-size: 1.1rem;
 }
 
+.addBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+
+  /* Aapke variables ka use */
+  background: var(--primary-color);
+  color: var(--button-text);
+  box-shadow: var(--button-shadow);
+
+  /* Smooth transition for theme and hover */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.addBtn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.addBtn:active {
+  transform: translateY(0);
+}
+
+/* Icon style inside button */
+.addBtn svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.5px;
+}
+
+@media (max-width: 480px) {
+  .addBtn {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    border-radius: 10px;
+  }
+}
+
 /* Responsive for small screens */
 @media (max-width: 600px) {
   .totals,

@@ -11,3 +11,15 @@ export async function GET() {
     status: data?.status,
   });
 }
+
+export const postData = async (params) => {
+  return await axiosClient.post(apiConfig.expenseTable.post, params);
+};
+
+export async function POST(req) {
+  const body = await req.json();
+  const data = await postData(body);
+  return new Response(JSON.stringify(data?.data), {
+    status: data?.status,
+  });
+}

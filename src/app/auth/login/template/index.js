@@ -54,7 +54,7 @@ const Login = () => {
         setPassword("");
 
         // Force reload so middleware detects cookie
-        window.location.href = "/expenseForm";
+        window.location.href = "/expenseTable";
       } else {
         showAlertMessage({
           message: `❌ ${res?.error}`,

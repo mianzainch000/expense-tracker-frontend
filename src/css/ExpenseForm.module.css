@@ -1,58 +1,125 @@
-.wrapper {
+/* ========================================= */
+/* PROFESSIONAL MODAL CSS              */
+/* ========================================= */
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--modal-overlay-bg);
+  backdrop-filter: blur(5px); /* Premium Glass effect */
   display: flex;
-  padding: 20px;
-  /* min-height: 100vh; */
   align-items: center;
   justify-content: center;
-  background: var(--bg-color);
+  z-index: 2000;
+  padding: 16px;
+  animation: fadeIn 0.3s ease;
 }
 
-.container {
+.modalContainer {
   width: 100%;
-  padding: 24px;
-  margin: 0 auto;
-  max-width: 600px;
-  border-radius: 12px;
+  max-width: 550px;
   background: var(--card-bg);
-  box-shadow: 0 6px 12px var(--card-shadow-color);
+  border-radius: 20px;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column; /* Header, Form, Footer ko stack karne ke liye */
+  max-height: 90vh; /* Screen se bahar nahi jayega */
+  overflow: hidden; /* Container khud scroll nahi hoga */
+  position: relative;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modalHeader {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--card-bg-secondary);
+  flex-shrink: 0; /* Header size fix rahega */
 }
 
 .title {
-  font-weight: 700;
   font-size: 1.4rem;
-  text-align: center;
-  margin-bottom: 16px;
+  font-weight: 700;
   color: var(--text-color);
+  margin: 0;
 }
 
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--muted-color);
+  margin-top: 4px;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  color: var(--muted-color);
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 5px;
+  line-height: 1;
+}
+
+.closeBtn:hover {
+  color: var(--error-color);
+}
+
+/* MIDDLE SCROLLABLE PART */
 .form {
-  gap: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto; /* Form content scroll hoga agar lamba ho */
+  flex-grow: 1; /* Baki bachi hui space ye lega */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+/* Custom Scrollbar for Chrome/Safari */
+.form::-webkit-scrollbar {
+  width: 6px;
+}
+.form::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 10px;
+}
+
+.grid {
   display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
 .field {
-  gap: 6px;
   display: flex;
   flex-direction: column;
+  gap: 6px;
 }
 
 .label {
   font-size: 0.9rem;
-  color: var(--muted-color);
+  font-weight: 600;
+  color: var(--text-color);
 }
 
 .input,
 .select {
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s;
   width: 100%;
-  outline: none;
-  padding: 10px 12px;
+  padding: 12px 14px;
   border-radius: 10px;
-  color: var(--text-color);
-  background: var(--card-bg);
   border: 1px solid var(--input-border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: all 0.2s;
+  outline: none;
 }
 
 .input:focus,
@@ -61,32 +128,91 @@
   box-shadow: 0 0 0 3px var(--focus-ring-color);
 }
 
-.button {
-  border: none;
-  padding: 12px;
-  cursor: pointer;
-  font-weight: 600;
+.modalFooter {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  background: var(--card-bg-secondary);
+  flex-shrink: 0; /* Footer hamesha screen ke bottom par fix rahega */
+}
+
+.cancelBtn {
+  padding: 10px 20px;
   border-radius: 10px;
-  color: var(--button-text);
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-color);
+  font-weight: 600;
+  cursor: pointer;
   transition: background 0.2s;
+}
+
+.cancelBtn:hover {
+  background: var(--mobile-border-color);
+}
+
+.submitBtn {
+  padding: 10px 24px;
+  border-radius: 10px;
+  border: none;
   background: var(--primary-color);
-  box-shadow: 0 2px 6px var(--button-shadow-color);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--button-shadow);
+  transition: all 0.2s;
 }
 
-.button:hover {
+.submitBtn:hover {
   background: var(--primary-hover);
+  transform: translateY(-1px);
 }
 
-.error {
-  font-size: 0.8rem;
-  color: var(--error-color);
-}
-
-@media (min-width: 768px) {
-  .wrapper {
-    padding: 40px;
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  .container {
-    padding: 32px;
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* MOBILE RESPONSIVE (480px) */
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr; /* 2 columns se 1 column */
+  }
+
+  .modalContainer {
+    max-height: 95vh; /* Mobile par screen cover kare */
+    border-radius: 16px;
+  }
+
+  .form {
+    padding: 20px; /* Thodi tight spacing */
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .submitBtn,
+  .cancelBtn {
+    flex: 1; /* Mobile par buttons barabar size ke ho jayenge */
+    text-align: center;
   }
 }

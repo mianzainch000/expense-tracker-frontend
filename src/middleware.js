@@ -8,7 +8,7 @@ const publicPages = [
   "/auth/forgotPassword",
   "/auth/resetPassword",
 ];
-const protectedPages = ["/expenseForm", "/expenseTable"];
+const protectedPages = ["/expenseTable"];
 
 export async function middleware(req) {
   const { pathname } = req.nextUrl;
@@ -29,7 +29,7 @@ export async function middleware(req) {
   if (!isAuthenticated && isProtectedPage)
     return NextResponse.redirect(new URL("/", req.url));
   if (isAuthenticated && isPublicPage)
-    return NextResponse.redirect(new URL("/expenseForm", req.url));
+    return NextResponse.redirect(new URL("/expenseTable", req.url));
 
   return NextResponse.next();
 }

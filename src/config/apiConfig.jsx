@@ -5,12 +5,10 @@ export const apiConfig = {
   forgotPassword: "forgotPassword",
   resetPassword: "resetPassword",
   googleLogin: "googleLogin",
-  expenseForm: {
-    post: "postExpense",
-    update: "updateExpense",
-  },
   expenseTable: {
     get: "getExpense",
+    post: "postExpense",
+    update: "updateExpense",
     delete: "deleteExpense",
   },
 };
