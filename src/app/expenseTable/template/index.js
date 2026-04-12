@@ -193,22 +193,22 @@ const ExpenseTable = () => {
             </div>
           </div>
         </div>
-
-        <div className={styles.tableWrapper}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Amount</th>
-                <th>Payment Type</th>
-                <th>Type</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentRows.length > 0 ? (
-                currentRows.map((row) => (
+        {/* Table Wrapper check */}
+        {getExpenses.length > 0 ? (
+          <div className={styles.tableWrapper}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Amount</th>
+                  <th>Payment Type</th>
+                  <th>Type</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentRows.map((row) => (
                   <tr
                     key={row._id}
                     className={
@@ -243,15 +243,16 @@ const ExpenseTable = () => {
                       </button>
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr className={styles.noDataRow}>
-                  <td colSpan="6">No Data Found</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          // Jab data na ho toh sirf ye message show hoga
+          <div className={styles.noDataFound}>
+            <p>No Data Found</p>
+          </div>
+        )}
       </div>
 
       {/* Confirm Modal */}

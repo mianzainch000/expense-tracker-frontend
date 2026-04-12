@@ -219,6 +219,10 @@
   color: var(--highlight-text);
 }
 
+.noDataFound {
+  text-align: center;
+}
+
 /* 📱 Mobile & Tablet: convert table → cards */
 @media (max-width: 768px) {
   .table thead {
