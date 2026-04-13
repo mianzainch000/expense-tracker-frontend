@@ -44,7 +44,7 @@ const Login = () => {
       const res = await signIn("credentials", {
         email,
         password,
-        redirect: false, // client-side redirect handle karenge
+        redirect: false,
       });
 
       if (res?.ok) {
@@ -53,7 +53,6 @@ const Login = () => {
         setEmail("");
         setPassword("");
 
-        // Force reload so middleware detects cookie
         window.location.href = "/expenseTable";
       } else {
         showAlertMessage({

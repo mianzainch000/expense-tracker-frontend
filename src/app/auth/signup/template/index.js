@@ -23,19 +23,16 @@ const Signup = () => {
   const showAlertMessage = useSnackbar();
 
   function validate() {
-    // Check if first name is empty
     if (!firstName.trim()) {
       showAlertMessage({ message: "First Name is required", type: "error" });
       return false;
     }
 
-    // Check if last name is empty
     if (!lastName.trim()) {
       showAlertMessage({ message: "Last Name is required", type: "error" });
       return false;
     }
 
-    // Check if email is empty or invalid
     if (!email.trim()) {
       showAlertMessage({ message: "Email is required", type: "error" });
       return false;
@@ -44,13 +41,11 @@ const Signup = () => {
       return false;
     }
 
-    // Check if password is empty
     if (!password.trim()) {
       showAlertMessage({ message: "Password is required", type: "error" });
       return false;
     }
 
-    // Check if confirm password is empty
     if (!confirmPassword.trim()) {
       showAlertMessage({
         message: "Confirm Password is required",
@@ -59,20 +54,17 @@ const Signup = () => {
       return false;
     }
 
-    // Check if password and confirm password match
     if (password !== confirmPassword) {
       showAlertMessage({ message: "Passwords do not match", type: "error" });
       return false;
     }
 
-    return true; // All validations passed
+    return true;
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (!validate()) return;
-
-    // Api call
 
     await signup();
   }
@@ -109,7 +101,6 @@ const Signup = () => {
     } catch (error) {
       const { message } = handleAxiosError(error);
       showAlertMessage({
-        // message: `${message}${status ? ` (Status: ${status})` : ""}`,
         message: message,
         type: "error",
       });
@@ -129,7 +120,7 @@ const Signup = () => {
           <h2 className={styles.title}>Create Account</h2>
 
           <form onSubmit={handleSubmit} className={styles.form}>
-            {/* First Name */}
+            {}
             <input
               type="text"
               placeholder="First Name"
@@ -138,7 +129,7 @@ const Signup = () => {
               className={styles.inputField}
             />
 
-            {/* Last Name */}
+            {}
             <input
               type="text"
               placeholder="Last Name"
@@ -147,7 +138,7 @@ const Signup = () => {
               className={styles.inputField}
             />
 
-            {/* Email */}
+            {}
             <input
               type="email"
               placeholder="Email"
@@ -156,7 +147,7 @@ const Signup = () => {
               className={styles.inputField}
             />
 
-            {/* Password */}
+            {}
             <div className={styles.passwordWrapper}>
               <input
                 type={showPassword ? "text" : "password"}
@@ -174,7 +165,7 @@ const Signup = () => {
               </button>
             </div>
 
-            {/* Confirm Password */}
+            {}
             <div className={styles.passwordWrapper}>
               <input
                 type={showConfirmPassword ? "text" : "password"}

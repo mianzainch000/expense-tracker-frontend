@@ -24,7 +24,6 @@
   background: transparent;
 }
 
-/* Colors */
 .error {
   background-color: #f44336;
 }
@@ -41,7 +40,6 @@
   background-color: #ff9800;
 }
 
-/* Positions */
 .top-right {
   top: 20px;
   right: 20px;
@@ -62,7 +60,6 @@
   bottom: 20px;
 }
 
-/* Animations */
 @keyframes slideInLeft {
   from {
     opacity: 0;

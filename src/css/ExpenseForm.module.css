@@ -1,125 +1,119 @@
-/* ========================================= */
-/* PROFESSIONAL MODAL CSS              */
-/* ========================================= */
-
 .modalOverlay {
-  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--modal-overlay-bg);
-  backdrop-filter: blur(5px); /* Premium Glass effect */
   display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 2000;
   padding: 16px;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
   animation: fadeIn 0.3s ease;
+  background: var(--modal-overlay-bg);
 }
 
 .modalContainer {
   width: 100%;
-  max-width: 550px;
-  background: var(--card-bg);
-  border-radius: 20px;
-  box-shadow: var(--card-shadow);
   display: flex;
-  flex-direction: column; /* Header, Form, Footer ko stack karne ke liye */
-  max-height: 90vh; /* Screen se bahar nahi jayega */
-  overflow: hidden; /* Container khud scroll nahi hoga */
+  max-width: 550px;
+  max-height: 90vh;
+  overflow: hidden;
   position: relative;
+  border-radius: 20px;
+  flex-direction: column;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
   animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modalHeader {
-  padding: 20px 24px;
-  border-bottom: 1px solid var(--border-color);
   display: flex;
-  justify-content: space-between;
+  flex-shrink: 0;
+  padding: 20px 24px;
   align-items: center;
+  justify-content: space-between;
   background: var(--card-bg-secondary);
-  flex-shrink: 0; /* Header size fix rahega */
+  border-bottom: 1px solid var(--border-color);
 }
 
 .title {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--text-color);
   margin: 0;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--text-color);
 }
 
 .subtitle {
+  margin-top: 4px;
   font-size: 0.85rem;
   color: var(--muted-color);
-  margin-top: 4px;
 }
 
 .closeBtn {
-  background: transparent;
   border: none;
-  font-size: 1.8rem;
-  color: var(--muted-color);
-  cursor: pointer;
-  transition: color 0.2s;
   padding: 5px;
   line-height: 1;
+  cursor: pointer;
+  font-size: 1.8rem;
+  transition: color 0.2s;
+  background: transparent;
+  color: var(--muted-color);
 }
 
 .closeBtn:hover {
   color: var(--error-color);
 }
 
-/* MIDDLE SCROLLABLE PART */
 .form {
+  gap: 20px;
+  flex-grow: 1;
   padding: 24px;
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  overflow-y: auto; /* Form content scroll hoga agar lamba ho */
-  flex-grow: 1; /* Baki bachi hui space ye lega */
+  overflow-y: auto;
   scrollbar-width: thin;
+  flex-direction: column;
   scrollbar-color: var(--border-color) transparent;
 }
 
-/* Custom Scrollbar for Chrome/Safari */
 .form::-webkit-scrollbar {
   width: 6px;
 }
 .form::-webkit-scrollbar-thumb {
-  background: var(--border-color);
   border-radius: 10px;
+  background: var(--border-color);
 }
 
 .grid {
+  gap: 16px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
 }
 
 .field {
+  gap: 6px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
 }
 
 .label {
-  font-size: 0.9rem;
   font-weight: 600;
+  font-size: 0.9rem;
   color: var(--text-color);
 }
 
 .input,
 .select {
   width: 100%;
+  outline: none;
+  font-size: 1rem;
   padding: 12px 14px;
   border-radius: 10px;
-  border: 1px solid var(--input-border-color);
-  background: var(--card-bg);
-  color: var(--text-color);
-  font-size: 1rem;
   transition: all 0.2s;
-  outline: none;
+  color: var(--text-color);
+  background: var(--card-bg);
+  border: 1px solid var(--input-border-color);
 }
 
 .input:focus,
@@ -129,24 +123,24 @@
 }
 
 .modalFooter {
-  padding: 16px 24px;
-  border-top: 1px solid var(--border-color);
-  display: flex;
-  justify-content: flex-end;
   gap: 12px;
+  display: flex;
+  flex-shrink: 0;
+  padding: 16px 24px;
+  justify-content: flex-end;
   background: var(--card-bg-secondary);
-  flex-shrink: 0; /* Footer hamesha screen ke bottom par fix rahega */
+  border-top: 1px solid var(--border-color);
 }
 
 .cancelBtn {
+  cursor: pointer;
+  font-weight: 600;
   padding: 10px 20px;
   border-radius: 10px;
-  border: 1px solid var(--border-color);
   background: transparent;
   color: var(--text-color);
-  font-weight: 600;
-  cursor: pointer;
   transition: background 0.2s;
+  border: 1px solid var(--border-color);
 }
 
 .cancelBtn:hover {
@@ -154,23 +148,22 @@
 }
 
 .submitBtn {
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
   padding: 10px 24px;
   border-radius: 10px;
-  border: none;
-  background: var(--primary-color);
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: var(--button-shadow);
   transition: all 0.2s;
+  background: var(--primary-color);
+  box-shadow: var(--button-shadow);
 }
 
 .submitBtn:hover {
-  background: var(--primary-hover);
   transform: translateY(-1px);
+  background: var(--primary-hover);
 }
 
-/* ANIMATIONS */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -182,28 +175,27 @@
 
 @keyframes slideUp {
   from {
-    transform: translateY(20px);
     opacity: 0;
+    transform: translateY(20px);
   }
   to {
-    transform: translateY(0);
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* MOBILE RESPONSIVE (480px) */
 @media (max-width: 480px) {
   .grid {
-    grid-template-columns: 1fr; /* 2 columns se 1 column */
+    grid-template-columns: 1fr;
   }
 
   .modalContainer {
-    max-height: 95vh; /* Mobile par screen cover kare */
+    max-height: 95vh;
     border-radius: 16px;
   }
 
   .form {
-    padding: 20px; /* Thodi tight spacing */
+    padding: 20px;
   }
 
   .title {
@@ -212,7 +204,7 @@
 
   .submitBtn,
   .cancelBtn {
-    flex: 1; /* Mobile par buttons barabar size ke ho jayenge */
+    flex: 1;
     text-align: center;
   }
 }

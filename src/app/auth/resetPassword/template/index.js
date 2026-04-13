@@ -103,7 +103,7 @@ const ResetPassword = () => {
               className={styles.inputField}
             />
 
-            {/* Password */}
+            {}
             <div className={styles.passwordWrapper}>
               <input
                 type={showPassword ? "text" : "password"}
@@ -121,7 +121,7 @@ const ResetPassword = () => {
               </button>
             </div>
 
-            {/* Confirm Password */}
+            {}
             <div className={styles.passwordWrapper}>
               <input
                 type={showConfirmPassword ? "text" : "password"}

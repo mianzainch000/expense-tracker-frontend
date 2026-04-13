@@ -20,7 +20,7 @@ export const authOptions = {
             {
               email: credentials.email,
               password: credentials.password,
-            }
+            },
           );
 
           if (res.status === 200) {
@@ -40,7 +40,7 @@ export const authOptions = {
           }
         } catch (error) {
           throw new Error(
-            error?.response?.data?.message || error.message || "Login failed"
+            error?.response?.data?.message || error.message || "Login failed",
           );
         }
       },
@@ -61,9 +61,7 @@ export const authOptions = {
 
   callbacks: {
     async signIn({ account, profile }) {
-      // 🔹 Google login
       if (account.provider === "google") {
-        // Backend call to create user or get JWT
         const res = await axios.post(
           `${apiConfig.baseUrl}${apiConfig.googleLogin}`,
           {
@@ -71,7 +69,7 @@ export const authOptions = {
             firstName: profile.given_name,
             lastName: profile.family_name,
             googleId: profile.sub,
-          }
+          },
         );
 
         if (res.status === 200) {
@@ -84,14 +82,14 @@ export const authOptions = {
             res.data.user?.firstName || profile.given_name,
             {
               maxAge: 2 * 24 * 60 * 60,
-            }
+            },
           );
           cookies().set(
             "lastName",
             res.data.user?.lastName || profile.family_name,
             {
               maxAge: 2 * 24 * 60 * 60,
-            }
+            },
           );
         }
       }

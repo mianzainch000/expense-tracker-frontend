@@ -1,5 +1,6 @@
 import { apiConfig } from "@/config/apiConfig";
 import axiosClient from "@/config/axiosClient";
+
 export const postData = async (params) => {
   return await axiosClient.post(apiConfig.resetPassword, params);
 };

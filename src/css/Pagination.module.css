@@ -45,7 +45,6 @@
   box-shadow: 0 0 8px var(--active-shadow);
 }
 
-/* Dots style ("...") */
 .pageBtn[style] {
   cursor: default;
   box-shadow: none;
@@ -53,7 +52,6 @@
   color: var(--muted-color);
 }
 
-/* Responsive */
 @media (max-width: 480px) {
   .pageBtn {
     min-width: 30px;

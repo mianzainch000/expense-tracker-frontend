@@ -1,19 +1,18 @@
 "use client";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { getCookie, setCookie } from "cookies-next";
 import Loader from "@/components/Loader";
+import { useEffect, useState } from "react";
+import ExpenseForm from "@/components/Modal";
 import Pagination from "@/components/Pagination";
-import ConfirmModal from "@/components/ConfirmModal";
-import { useSnackbar } from "@/components/Snackbar";
-import handleAxiosError from "@/components/HandleAxiosError";
-import ExpenseForm from "@/components/Modal"; // Form as Modal
 import styles from "@/css/ExpenseTable.module.css";
+import { getCookie, setCookie } from "cookies-next";
+import { useSnackbar } from "@/components/Snackbar";
+import ConfirmModal from "@/components/ConfirmModal";
+import handleAxiosError from "@/components/HandleAxiosError";
 
 const ExpenseTable = () => {
   const showAlertMessage = useSnackbar();
 
-  // Data States
   const [getExpenses, setGetExpenses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [totals, setTotals] = useState({
@@ -24,24 +23,24 @@ const ExpenseTable = () => {
     account: 0,
   });
 
-  // Modal States
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedExpense, setSelectedExpense] = useState(null);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState("");
 
-  // Pagination
   const rowsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(getExpenses.length / rowsPerPage);
-  const currentRows = getExpenses.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+  const currentRows = getExpenses.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage,
+  );
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
     setCookie("currentPage", page, { maxAge: 60 * 60 * 24 * 7 });
   };
 
-  // Fetch Data Function
   const getExpenseData = async () => {
     setLoading(true);
     try {
@@ -68,14 +67,13 @@ const ExpenseTable = () => {
     getExpenseData();
   }, []);
 
-  // Modal Handlers
   const handleAddNew = () => {
-    setSelectedExpense(null); // Clear for new entry
+    setSelectedExpense(null);
     setIsFormOpen(true);
   };
 
   const handleEdit = (row) => {
-    setSelectedExpense(row); // Set row data for editing
+    setSelectedExpense(row);
     setIsFormOpen(true);
   };
 
@@ -87,19 +85,18 @@ const ExpenseTable = () => {
   const confirmDelete = async () => {
     setLoading(true);
     try {
-      // Masla yahan ho sakta hai: Kuch APIs ko body mein ID chahiye hoti hai 
-      // aur kuch ko sirf URL mein. Hum dono check kar letay hain.
       const res = await axios.delete(`expenseTable/api/${deleteId}`, {
-        data: { id: deleteId } // Agar backend body se id utha raha hai toh ye zaroori hai
+        data: { id: deleteId },
       });
 
       if (res?.status === 200) {
-        showAlertMessage({ message: res.data.message || "Deleted successfully", type: "success" });
+        showAlertMessage({
+          message: res.data.message || "Deleted successfully",
+          type: "success",
+        });
 
-        // Frontend state update: Foran list se hatane ke liye (Performance improve hogi)
         setGetExpenses((prev) => prev.filter((item) => item._id !== deleteId));
 
-        // Ya phir pura data refresh karein
         getExpenseData();
       }
     } catch (error) {
@@ -107,7 +104,7 @@ const ExpenseTable = () => {
       showAlertMessage({ message, type: "error" });
     } finally {
       setDeleteModalOpen(false);
-      setDeleteId(""); // Reset id
+      setDeleteId("");
       setLoading(false);
     }
   };
@@ -116,7 +113,7 @@ const ExpenseTable = () => {
       {loading && <Loader />}
 
       <div className={styles.container}>
-        {/* Header with Add Button */}
+        {}
         <div className={styles.headerSection}>
           <button className={styles.addBtn} onClick={handleAddNew}>
             <svg
@@ -133,7 +130,7 @@ const ExpenseTable = () => {
           </button>
         </div>
 
-        {/* Stats Section */}
+        {}
         <div className={styles.balanceContainer}>
           <div className={styles.balanceSection}>
             <div className={styles.balance}>
@@ -163,7 +160,7 @@ const ExpenseTable = () => {
           </div>
         </div>
 
-        {/* Table */}
+        {}
         {getExpenses.length > 0 ? (
           <div className={styles.tableWrapper}>
             <table className={styles.table}>
@@ -179,15 +176,32 @@ const ExpenseTable = () => {
               </thead>
               <tbody>
                 {currentRows.map((row) => (
-                  <tr key={row._id} className={row.type === "income" ? styles.incomeRow : styles.expenseRow}>
+                  <tr
+                    key={row._id}
+                    className={
+                      row.type === "income"
+                        ? styles.incomeRow
+                        : styles.expenseRow
+                    }
+                  >
                     <td data-label="Date">{row.date}</td>
                     <td data-label="Description">{row.description}</td>
                     <td data-label="Amount">{row.amount}</td>
                     <td data-label="Payment">{row.paymentType}</td>
                     <td data-label="Type">{row.type}</td>
                     <td data-label="Actions">
-                      <button className={styles.actionBtn} onClick={() => handleEdit(row)}>✏️</button>
-                      <button className={styles.actionBtn} onClick={() => handleDeleteClick(row._id)}>🗑️</button>
+                      <button
+                        className={styles.actionBtn}
+                        onClick={() => handleEdit(row)}
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        className={styles.actionBtn}
+                        onClick={() => handleDeleteClick(row._id)}
+                      >
+                        🗑️
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -208,7 +222,7 @@ const ExpenseTable = () => {
         />
       </div>
 
-      {/* MODALS */}
+      {}
       <ExpenseForm
         isOpen={isFormOpen}
         onClose={() => setIsFormOpen(false)}

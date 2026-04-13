@@ -12,12 +12,10 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use((config) => {
   let token;
 
-  // Server-side
   try {
     token = cookies().get("sessionToken")?.value;
   } catch (err) {}
 
-  // Client-side
   if (!token && typeof window !== "undefined") {
     const match = document.cookie.match(/sessionToken=([^;]+)/);
     token = match ? match[1] : null;

@@ -11,10 +11,8 @@ const Pagination = ({
 
   const pageNumbers = [];
 
-  // Always show first page
   pageNumbers.push(1);
 
-  // Left window: start from 2, but also extend if currentPage is close
   let start = 2;
   let end = Math.min(totalPages - 1, windowSize + 1);
 
@@ -23,19 +21,16 @@ const Pagination = ({
     end = currentPage + 1;
   }
 
-  // Push middle pages
   for (let i = start; i <= end; i++) {
     if (i > 1 && i < totalPages) {
       pageNumbers.push(i);
     }
   }
 
-  // Add dots if gap after middle pages
   if (end < totalPages - 1) {
     pageNumbers.push("...");
   }
 
-  // Always show last page
   if (totalPages > 1) {
     pageNumbers.push(totalPages);
   }

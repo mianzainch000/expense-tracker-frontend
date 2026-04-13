@@ -7,8 +7,6 @@
   box-shadow: var(--card-shadow);
 }
 
-/* Balance & Totals */
-
 .balanceContainer {
   width: 95%;
   padding: 20px;
@@ -117,29 +115,25 @@
 }
 
 .addBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 10px;
+  border: none;
+  display: flex;
+  cursor: pointer;
+  font-weight: 600;
   padding: 12px 24px;
   font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
+  align-items: center;
   border-radius: 12px;
-
-  /* Aapke variables ka use */
-  background: var(--primary-color);
+  justify-content: center;
   color: var(--button-text);
+  background: var(--primary-color);
   box-shadow: var(--button-shadow);
-
-  /* Smooth transition for theme and hover */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .addBtn:hover {
-  background: var(--primary-hover);
   transform: translateY(-2px);
+  background: var(--primary-hover);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
@@ -147,7 +141,6 @@
   transform: translateY(0);
 }
 
-/* Icon style inside button */
 .addBtn svg {
   width: 18px;
   height: 18px;
@@ -162,7 +155,6 @@
   }
 }
 
-/* Responsive for small screens */
 @media (max-width: 600px) {
   .totals,
   .paymentType {
@@ -184,7 +176,6 @@
   }
 }
 
-/* Table Wrapper */
 .tableWrapper {
   width: 100%;
   overflow-x: auto;
@@ -226,7 +217,6 @@
   background: var(--hover-bg);
 }
 
-/* Alternate row coloring */
 .table tr:nth-child(even) {
   background-color: var(--row-bg-even);
 }
@@ -241,7 +231,6 @@
   background-color: var(--expense-row-bg) !important;
 }
 
-/* Actions buttons */
 .actionBtn {
   border: none;
   margin: 0 5px;
@@ -257,7 +246,6 @@
   color: var(--primary-hover);
 }
 
-/* No Data row */
 .noDataRow td {
   padding: 18px;
   font-weight: 600;
@@ -269,7 +257,6 @@
   text-align: center;
 }
 
-/* 📱 Mobile & Tablet: convert table → cards */
 @media (max-width: 768px) {
   .table thead {
     display: none;

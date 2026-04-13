@@ -21,12 +21,9 @@ const handleAxiosError = (error) => {
   let message = "Server error";
   let status = null;
 
-  // Missing dependency
   if (error instanceof ReferenceError) {
     message = `Missing dependency: ${error.message}`;
-  }
-  // Axios response with data
-  else if (error.response?.data) {
+  } else if (error.response?.data) {
     const data = error.response.data;
     status = error.response.status;
 
@@ -39,13 +36,9 @@ const handleAxiosError = (error) => {
     } else {
       message = extractErrorMessages(data);
     }
-  }
-  // Axios request made but no response
-  else if (error.request) {
+  } else if (error.request) {
     message = "No response from server. Please try again later.";
-  }
-  // Other JS errors
-  else if (error.message) {
+  } else if (error.message) {
     message = error.message;
   }
 

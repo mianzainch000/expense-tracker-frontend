@@ -5,7 +5,6 @@ const Loader = () => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Dummy simulation of progress increase
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {

@@ -1,5 +1,5 @@
 import "./globals.css";
-import { cookies } from "next/headers"; // Cookies import karein
+import { cookies } from "next/headers";
 import NextLoader from "@/components/NextTopLoader";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SnackbarProvider } from "@/components/Snackbar";
@@ -20,12 +20,10 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  // Server-side par cookie read karein
   const cookieStore = await cookies();
   const theme = cookieStore.get("theme")?.value || "light";
 
   return (
-    // Yahan data-theme add karne se flash khatam ho jayega
     <html lang="en" data-theme={theme}>
       <body
         suppressHydrationWarning={true}

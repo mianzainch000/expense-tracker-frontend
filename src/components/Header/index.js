@@ -1,14 +1,13 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import { signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import styles from "@/css/Header.module.css";
 import { useSnackbar } from "@/components/Snackbar";
 import ConfirmModal from "@/components/ConfirmModal";
-import { useRouter } from "next/navigation";
 import { setCookie, deleteCookie, getCookie } from "cookies-next";
-import { signOut } from "next-auth/react";
-
 
 const Header = ({ initialTheme }) => {
   const router = useRouter();
@@ -31,13 +30,10 @@ const Header = ({ initialTheme }) => {
   };
 
   const handleConfirm = async () => {
-    // 1. Apni custom cookies delete karein
     deleteCookie("sessionToken", { path: "/" });
     deleteCookie("firstName", { path: "/" });
     deleteCookie("lastName", { path: "/" });
 
-    // 2. NextAuth SignOut (Bina page refresh ke)
-    // redirect: false karne se page reload nahi hoga aur theme change nahi hogi
     await signOut({ redirect: false });
 
     showAlertMessage({
@@ -47,28 +43,30 @@ const Header = ({ initialTheme }) => {
 
     setModalOpen(false);
 
-    // 3. Smooth Redirection
     router.push("/");
-    router.refresh(); // Taake middleware update ho jaye
+    router.refresh();
   };
 
   return (
     <>
       <header className={styles.header}>
-        {/* Logo Left */}
+        {}
         <div className={styles.logo}>
           <Link href="/">
             <Image src="/logo.png" alt="Logo" width={45} height={45} priority />
           </Link>
         </div>
 
-        {/* Right Section: Only Theme & Logout */}
+        {}
         <div className={styles.actions}>
           <button className={styles.toggleTheme} onClick={toggleTheme}>
             {theme === "light" ? "🌙" : "☀️"}
           </button>
 
-          <button className={styles.logoutBtn} onClick={() => setModalOpen(true)}>
+          <button
+            className={styles.logoutBtn}
+            onClick={() => setModalOpen(true)}
+          >
             Logout
           </button>
         </div>
