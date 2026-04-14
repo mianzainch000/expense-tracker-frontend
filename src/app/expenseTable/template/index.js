@@ -1,11 +1,11 @@
 "use client";
 import axios from "axios";
 import Loader from "@/components/Loader";
+import { setCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import ExpenseForm from "@/components/Modal";
 import Pagination from "@/components/Pagination";
 import styles from "@/css/ExpenseTable.module.css";
-import { getCookie, setCookie } from "cookies-next";
 import { useSnackbar } from "@/components/Snackbar";
 import ConfirmModal from "@/components/ConfirmModal";
 import handleAxiosError from "@/components/HandleAxiosError";
@@ -95,9 +95,35 @@ const ExpenseTable = () => {
           type: "success",
         });
 
-        setGetExpenses((prev) => prev.filter((item) => item._id !== deleteId));
+        const deletedItem = getExpenses.find((item) => item._id === deleteId);
+        const updatedExpenses = getExpenses.filter((item) => item._id !== deleteId);
+        setGetExpenses(updatedExpenses);
 
-        getExpenseData();
+        const newTotalPages = Math.ceil(updatedExpenses.length / rowsPerPage);
+        if (currentPage > newTotalPages && newTotalPages > 0) {
+          handlePageChange(newTotalPages);
+        } else if (updatedExpenses.length === 0) {
+          handlePageChange(1);
+        }
+        if (deletedItem) {
+          setTotals((prev) => {
+            const isIncome = deletedItem.type === "income";
+            const amount = Number(deletedItem.amount);
+
+            return {
+              ...prev,
+              income: isIncome ? prev.income - amount : prev.income,
+              expense: !isIncome ? prev.expense - amount : prev.expense,
+              balance: isIncome ? prev.balance - amount : prev.balance + amount,
+              cash: deletedItem.paymentType === "cash"
+                ? (isIncome ? prev.cash - amount : prev.cash + amount)
+                : prev.cash,
+              account: deletedItem.paymentType === "account"
+                ? (isIncome ? prev.account - amount : prev.account + amount)
+                : prev.account,
+            };
+          });
+        }
       }
     } catch (error) {
       const { message } = handleAxiosError(error);
@@ -113,7 +139,7 @@ const ExpenseTable = () => {
       {loading && <Loader />}
 
       <div className={styles.container}>
-        {}
+        { }
         <div className={styles.headerSection}>
           <button className={styles.addBtn} onClick={handleAddNew}>
             <svg
@@ -130,7 +156,7 @@ const ExpenseTable = () => {
           </button>
         </div>
 
-        {}
+        { }
         <div className={styles.balanceContainer}>
           <div className={styles.balanceSection}>
             <div className={styles.balance}>
@@ -160,7 +186,7 @@ const ExpenseTable = () => {
           </div>
         </div>
 
-        {}
+        { }
         {getExpenses.length > 0 ? (
           <div className={styles.tableWrapper}>
             <table className={styles.table}>
@@ -222,7 +248,7 @@ const ExpenseTable = () => {
         />
       </div>
 
-      {}
+      { }
       <ExpenseForm
         isOpen={isFormOpen}
         onClose={() => setIsFormOpen(false)}

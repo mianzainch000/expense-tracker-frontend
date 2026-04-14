@@ -46,7 +46,7 @@ const ForgotPassword = () => {
           type: "success",
         });
         setEmail("");
-        router.push("/auth/resetPassword");
+        router.push("/resetPassword");
       } else {
         showAlertMessage({
           message: res?.data.message,

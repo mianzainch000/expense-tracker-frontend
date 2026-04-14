@@ -3,10 +3,10 @@ import { NextResponse } from "next/server";
 
 const publicPages = [
   "/",
-  "/auth/signup",
-  "/auth/login",
-  "/auth/forgotPassword",
-  "/auth/resetPassword",
+  "/signup",
+  "/login",
+  "/forgotPassword",
+  "/resetPassword",
 ];
 const protectedPages = ["/expenseTable"];
 

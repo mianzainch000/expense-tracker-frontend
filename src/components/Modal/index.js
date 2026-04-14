@@ -2,7 +2,7 @@
 import axios from "axios";
 import Loader from "@/components/Loader";
 import { useEffect, useState } from "react";
-import styles from "@/css/ExpenseForm.module.css";
+import styles from "@/css/Modal.module.css";
 import { useSnackbar } from "@/components/Snackbar";
 import handleAxiosError from "@/components/HandleAxiosError";
 
@@ -20,7 +20,7 @@ const ExpenseForm = ({ expenseData, isOpen, onClose, refreshData }) => {
   const resetForm = () => {
     setDate("");
     setDescription("");
-    setAmount(0);
+    setAmount("");
     setPaymentType("");
     setType("");
     setEditId("");
@@ -133,9 +133,9 @@ const ExpenseForm = ({ expenseData, isOpen, onClose, refreshData }) => {
             <div className={styles.field}>
               <label className={styles.label}>Amount</label>
               <input
-                type="number"
+                // type="number"
                 value={amount}
-                onChange={(e) => setAmount(Number(e.target.value))}
+                onChange={(e) => setAmount(e.target.value)}
                 className={styles.input}
                 placeholder="0.00"
               />

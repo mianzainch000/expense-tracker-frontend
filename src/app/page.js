@@ -1,10 +1,11 @@
-import Login from "./auth/login/template";
+import React from "react";
+import Login from "../app/(auth)/login/template";
 
-const Home = () => {
+const LoginForm = () => {
   return <Login />;
 };
 
-export default Home;
+export default LoginForm;
 
 export function generateMetadata() {
   return { title: "Login" };

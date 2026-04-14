@@ -1,6 +1,6 @@
 "use client";
 import styles from "@/css/Snackbar.module.css";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const SnackbarContext = createContext();
 
@@ -8,21 +8,31 @@ export const SnackbarProvider = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [type, setType] = useState("error");
-  const [duration, setDuration] = useState(4000);
+  const [duration, setDuration] = useState(3000);
   const [position, setPosition] = useState("top-right");
   const [animation, setAnimation] = useState("slide-left");
 
+  const [toasts, setToasts] = useState([]);
+
   useEffect(() => {
     if (open) {
-      const timer = setTimeout(() => setOpen(false), duration);
+      const id = Date.now();
+      const newToast = { id, message, type, duration, position, animation };
+      setToasts((prev) => [...prev, newToast]);
+
+      const timer = setTimeout(() => {
+        setToasts((prev) => prev.filter((t) => t.id !== id));
+        setOpen(false);
+      }, duration);
+
       return () => clearTimeout(timer);
     }
-  }, [open, duration]);
+  }, [open, message, type, duration, position, animation]);
 
-  const showAlertMessage = ({
+  const showSnackbar = ({
     message,
     type = "error",
-    duration = 4000,
+    duration = 3000,
     position = "top-right",
     animation = "slide-right",
   }) => {
@@ -34,21 +44,39 @@ export const SnackbarProvider = ({ children }) => {
     setOpen(true);
   };
 
-  const getClasses = () => {
-    return `${styles.snackbar} ${styles[type]} ${styles[position]} ${styles[animation]}`;
-  };
-
   return (
-    <SnackbarContext.Provider value={showAlertMessage}>
+    <SnackbarContext.Provider value={showSnackbar}>
       {children}
-      {open && (
-        <div className={getClasses()}>
-          <span dangerouslySetInnerHTML={{ __html: message }} />
-          <button className={styles.close} onClick={() => setOpen(false)}>
-            &times;
-          </button>
+
+      {}
+      {["top-right", "top-left", "bottom-right", "bottom-left"].map((pos) => (
+        <div key={pos} className={`${styles.toastContainer} ${styles[pos]}`}>
+          {toasts
+            .filter((t) => t.position === pos)
+            .map((toast) => (
+              <div
+                key={toast.id}
+                className={`${styles.snackbar} ${styles[toast.type]} ${styles[toast.animation]}`}
+              >
+                <div className={styles.message}>
+                  <span dangerouslySetInnerHTML={{ __html: toast.message }} />
+                </div>
+                <button
+                  className={styles.close}
+                  onClick={() =>
+                    setToasts((prev) => prev.filter((t) => t.id !== toast.id))
+                  }
+                >
+                  &times;
+                </button>
+                <div
+                  className={styles.progress}
+                  style={{ animationDuration: `${toast.duration}ms` }}
+                />
+              </div>
+            ))}
         </div>
-      )}
+      ))}
     </SnackbarContext.Provider>
   );
 };
