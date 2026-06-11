@@ -11,4 +11,10 @@ export const apiConfig = {
     update: "updateExpense",
     delete: "deleteExpense",
   },
+  category: {
+    get: "getCategories",
+    post: "addCategory",
+    update: "updateCategory",
+    delete: "deleteCategory",
+  },
 };
