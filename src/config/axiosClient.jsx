@@ -9,23 +9,18 @@ const axiosClient = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-// Interceptor is now async to handle Next.js 15+ Cookies Promise
 axiosClient.interceptors.request.use(
   async (config) => {
     let token = null;
 
-    // Server-side Logic
     if (typeof window === "undefined") {
       try {
-        // cookies() is a promise in newer Next.js versions
         const cookieStore = await cookies();
         token = cookieStore.get("sessionToken")?.value;
       } catch (err) {
         console.error("Error accessing cookies on server:", err);
       }
-    }
-    // Client-side Logic
-    else {
+    } else {
       try {
         const match = document.cookie.match(/sessionToken=([^;]+)/);
         token = match ? match[1] : null;

@@ -12,7 +12,7 @@ export async function DELETE(req) {
     if (!body?.id || body.id === "undefined") {
       return new Response(
         JSON.stringify({ message: "ID is invalid or missing" }),
-        { status: 400 }
+        { status: 400 },
       );
     }
 

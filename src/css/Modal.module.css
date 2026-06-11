@@ -209,116 +209,113 @@
   }
 }
 
-/* ─── Manage Categories Button ─────────────────────────── */
 .manageCatBtn {
+  cursor: pointer;
+  font-weight: 600;
   padding: 5px 12px;
   border-radius: 8px;
-  border: 1.5px solid var(--border-color);
-  background: var(--card-bg-secondary);
-  color: var(--muted-color);
   font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
   white-space: nowrap;
+  color: var(--muted-color);
+  background: var(--card-bg-secondary);
+  border: 1.5px solid var(--border-color);
+  transition:
+    border-color 0.2s,
+    color 0.2s;
 }
 .manageCatBtn:hover {
-  border-color: var(--primary-color);
   color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
-/* ─── Manage Categories Panel ───────────────────────────── */
 .manageCatPanel {
+  gap: 10px;
+  display: flex;
+  overflow-y: auto;
+  max-height: 420px;
+  flex-direction: column;
   padding: 14px 20px 20px;
   border-top: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-height: 420px;
-  overflow-y: auto;
 }
 .manageCatTitle {
-  font-size: 0.82rem;
+  margin: 0;
   font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
   color: var(--muted-color);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin: 0;
 }
 
-/* Add row */
 .addCatRow {
-  display: flex;
   gap: 6px;
+  display: flex;
   align-items: center;
 }
 .addCatTypeSelect {
-  padding: 7px 10px;
-  border-radius: 8px;
-  border: 1.5px solid var(--border-color);
-  background: var(--card-bg);
-  color: var(--text-color);
-  font-size: 0.8rem;
   outline: none;
-  cursor: pointer;
   flex-shrink: 0;
+  cursor: pointer;
+  padding: 7px 10px;
+  font-size: 0.8rem;
+  border-radius: 8px;
+  color: var(--text-color);
+  background: var(--card-bg);
+  border: 1.5px solid var(--border-color);
 }
 .addCatInput {
   flex: 1;
+  outline: none;
   padding: 7px 12px;
   border-radius: 8px;
-  border: 1.5px solid var(--border-color);
-  background: var(--card-bg);
-  color: var(--text-color);
   font-size: 0.85rem;
-  outline: none;
+  color: var(--text-color);
+  background: var(--card-bg);
   transition: border-color 0.2s;
+  border: 1.5px solid var(--border-color);
 }
 .addCatInput:focus {
   border-color: var(--primary-color);
 }
 .addCatBtn {
   width: 34px;
-  height: 34px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  border: none;
-  background: var(--primary-color);
   color: #fff;
-  font-size: 1.2rem;
-  font-weight: 700;
-  cursor: pointer;
+  height: 34px;
+  border: none;
   display: flex;
+  flex-shrink: 0;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.2rem;
+  border-radius: 8px;
   align-items: center;
   justify-content: center;
   transition: background 0.2s;
+  background: var(--primary-color);
 }
 .addCatBtn:hover {
   background: var(--primary-hover);
 }
 
-/* Type section */
 .catTypeSection {
+  gap: 4px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
 }
 .catTypeLabel {
-  font-size: 0.72rem;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--muted-color);
   margin: 4px 0 2px;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted-color);
 }
 
-/* Individual category item */
 .catItem {
-  display: flex;
-  align-items: center;
   gap: 6px;
+  display: flex;
   padding: 6px 10px;
   border-radius: 8px;
+  align-items: center;
   background: var(--card-bg-secondary);
   border: 1px solid var(--border-color);
 }
@@ -329,44 +326,59 @@
 }
 .catEditInput {
   flex: 1;
+  outline: none;
   padding: 4px 8px;
   border-radius: 6px;
-  border: 1.5px solid var(--primary-color);
-  background: var(--card-bg);
-  color: var(--text-color);
   font-size: 0.85rem;
-  outline: none;
+  color: var(--text-color);
+  background: var(--card-bg);
+  border: 1.5px solid var(--primary-color);
 }
-.catEditBtn, .catDeleteBtn, .catSaveBtn, .catCancelBtn {
+.catEditBtn,
+.catDeleteBtn,
+.catSaveBtn,
+.catCancelBtn {
   width: 26px;
   height: 26px;
   border: none;
-  border-radius: 6px;
+  display: flex;
+  flex-shrink: 0;
   cursor: pointer;
   font-size: 0.8rem;
-  display: flex;
+  border-radius: 6px;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
   transition: background 0.15s;
 }
 .catEditBtn {
-  background: rgba(25, 118, 210, 0.1);
   color: var(--primary-color);
+  background: rgba(25, 118, 210, 0.1);
 }
-.catEditBtn:hover { background: var(--primary-color); color: #fff; }
+.catEditBtn:hover {
+  background: var(--primary-color);
+  color: #fff;
+}
 .catDeleteBtn {
-  background: rgba(211, 47, 47, 0.1);
   color: var(--error-color);
+  background: rgba(211, 47, 47, 0.1);
 }
-.catDeleteBtn:hover { background: var(--error-color); color: #fff; }
+.catDeleteBtn:hover {
+  background: var(--error-color);
+  color: #fff;
+}
 .catSaveBtn {
-  background: rgba(76, 175, 80, 0.12);
   color: var(--success-color);
+  background: rgba(76, 175, 80, 0.12);
 }
-.catSaveBtn:hover { background: var(--success-color); color: #fff; }
+.catSaveBtn:hover {
+  background: var(--success-color);
+  color: #fff;
+}
 .catCancelBtn {
-  background: rgba(107, 114, 128, 0.12);
   color: var(--muted-color);
+  background: rgba(107, 114, 128, 0.12);
 }
-.catCancelBtn:hover { background: var(--muted-color); color: #fff; }
+.catCancelBtn:hover {
+  background: var(--muted-color);
+  color: #fff;
+}
