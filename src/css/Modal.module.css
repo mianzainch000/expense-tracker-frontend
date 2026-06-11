@@ -1,0 +1,384 @@
+.modalOverlay {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 2000;
+  padding: 16px;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s ease;
+  background: var(--modal-overlay-bg);
+}
+
+.modalContainer {
+  width: 100%;
+  display: flex;
+  max-width: 550px;
+  max-height: 90vh;
+  overflow: hidden;
+  position: relative;
+  border-radius: 20px;
+  flex-direction: column;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modalHeader {
+  display: flex;
+  flex-shrink: 0;
+  padding: 20px 24px;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card-bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.title {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--text-color);
+}
+
+.subtitle {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: var(--muted-color);
+}
+
+.closeBtn {
+  border: none;
+  padding: 5px;
+  line-height: 1;
+  cursor: pointer;
+  font-size: 1.8rem;
+  transition: color 0.2s;
+  background: transparent;
+  color: var(--muted-color);
+}
+
+.closeBtn:hover {
+  color: var(--error-color);
+}
+
+.form {
+  gap: 20px;
+  flex-grow: 1;
+  padding: 24px;
+  display: flex;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  flex-direction: column;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+.form::-webkit-scrollbar {
+  width: 6px;
+}
+.form::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: var(--border-color);
+}
+
+.grid {
+  gap: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.field {
+  gap: 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.input,
+.select {
+  width: 100%;
+  outline: none;
+  font-size: 1rem;
+  padding: 12px 14px;
+  border-radius: 10px;
+  transition: all 0.2s;
+  color: var(--text-color);
+  background: var(--card-bg);
+  border: 1px solid var(--input-border-color);
+}
+
+.input:focus,
+.select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--focus-ring-color);
+}
+
+.modalFooter {
+  gap: 12px;
+  display: flex;
+  flex-shrink: 0;
+  padding: 16px 24px;
+  justify-content: flex-end;
+  background: var(--card-bg-secondary);
+  border-top: 1px solid var(--border-color);
+}
+
+.cancelBtn {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-color);
+  transition: background 0.2s;
+  border: 1px solid var(--border-color);
+}
+
+.cancelBtn:hover {
+  background: var(--mobile-border-color);
+}
+
+.submitBtn {
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 10px;
+  transition: all 0.2s;
+  background: var(--primary-color);
+  box-shadow: var(--button-shadow);
+}
+
+.submitBtn:hover {
+  transform: translateY(-1px);
+  background: var(--primary-hover);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modalContainer {
+    max-height: 95vh;
+    border-radius: 16px;
+  }
+
+  .form {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .submitBtn,
+  .cancelBtn {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+.manageCatBtn {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  color: var(--muted-color);
+  background: var(--card-bg-secondary);
+  border: 1.5px solid var(--border-color);
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+.manageCatBtn:hover {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.manageCatPanel {
+  gap: 10px;
+  display: flex;
+  overflow-y: auto;
+  max-height: 420px;
+  flex-direction: column;
+  padding: 14px 20px 20px;
+  border-top: 1px solid var(--border-color);
+}
+.manageCatTitle {
+  margin: 0;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  color: var(--muted-color);
+  text-transform: uppercase;
+}
+
+.addCatRow {
+  gap: 6px;
+  display: flex;
+  align-items: center;
+}
+.addCatTypeSelect {
+  outline: none;
+  flex-shrink: 0;
+  cursor: pointer;
+  padding: 7px 10px;
+  font-size: 0.8rem;
+  border-radius: 8px;
+  color: var(--text-color);
+  background: var(--card-bg);
+  border: 1.5px solid var(--border-color);
+}
+.addCatInput {
+  flex: 1;
+  outline: none;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--text-color);
+  background: var(--card-bg);
+  transition: border-color 0.2s;
+  border: 1.5px solid var(--border-color);
+}
+.addCatInput:focus {
+  border-color: var(--primary-color);
+}
+.addCatBtn {
+  width: 34px;
+  color: #fff;
+  height: 34px;
+  border: none;
+  display: flex;
+  flex-shrink: 0;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  background: var(--primary-color);
+}
+.addCatBtn:hover {
+  background: var(--primary-hover);
+}
+
+.catTypeSection {
+  gap: 4px;
+  display: flex;
+  flex-direction: column;
+}
+.catTypeLabel {
+  font-weight: 700;
+  margin: 4px 0 2px;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted-color);
+}
+
+.catItem {
+  gap: 6px;
+  display: flex;
+  padding: 6px 10px;
+  border-radius: 8px;
+  align-items: center;
+  background: var(--card-bg-secondary);
+  border: 1px solid var(--border-color);
+}
+.catName {
+  flex: 1;
+  font-size: 0.85rem;
+  color: var(--text-color);
+}
+.catEditInput {
+  flex: 1;
+  outline: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--text-color);
+  background: var(--card-bg);
+  border: 1.5px solid var(--primary-color);
+}
+.catEditBtn,
+.catDeleteBtn,
+.catSaveBtn,
+.catCancelBtn {
+  width: 26px;
+  height: 26px;
+  border: none;
+  display: flex;
+  flex-shrink: 0;
+  cursor: pointer;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.catEditBtn {
+  color: var(--primary-color);
+  background: rgba(25, 118, 210, 0.1);
+}
+.catEditBtn:hover {
+  background: var(--primary-color);
+  color: #fff;
+}
+.catDeleteBtn {
+  color: var(--error-color);
+  background: rgba(211, 47, 47, 0.1);
+}
+.catDeleteBtn:hover {
+  background: var(--error-color);
+  color: #fff;
+}
+.catSaveBtn {
+  color: var(--success-color);
+  background: rgba(76, 175, 80, 0.12);
+}
+.catSaveBtn:hover {
+  background: var(--success-color);
+  color: #fff;
+}
+.catCancelBtn {
+  color: var(--muted-color);
+  background: rgba(107, 114, 128, 0.12);
+}
+.catCancelBtn:hover {
+  background: var(--muted-color);
+  color: #fff;
+}

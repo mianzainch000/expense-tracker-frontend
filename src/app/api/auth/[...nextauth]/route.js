@@ -1,0 +1,109 @@
+import axios from "axios";
+import NextAuth from "next-auth";
+import { cookies } from "next/headers";
+import { apiConfig } from "@/config/apiConfig";
+import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
+
+export const authOptions = {
+  providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        try {
+          const res = await axios.post(
+            `${apiConfig.baseUrl}${apiConfig.login}`,
+            {
+              email: credentials.email,
+              password: credentials.password,
+            },
+          );
+
+          if (res.status === 200) {
+            const cookieStore = await cookies();
+
+            cookieStore.set("sessionToken", res.data.token, {
+              secure: true,
+              maxAge: 24 * 60 * 60,
+            });
+            cookieStore.set("firstName", res.data.user.firstName, {
+              maxAge: 24 * 60 * 60,
+            });
+            cookieStore.set("lastName", res.data.user.lastName, {
+              maxAge: 24 * 60 * 60,
+            });
+            return { ...res.data.user, message: res.data.message };
+          } else {
+            throw new Error(res.data?.message || "Login failed");
+          }
+        } catch (error) {
+          throw new Error(
+            error?.response?.data?.message || error.message || "Login failed",
+          );
+        }
+      },
+    }),
+
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+    }),
+  ],
+
+  callbacks: {
+    async signIn({ account, profile }) {
+      if (account.provider === "google") {
+        const res = await axios.post(
+          `${apiConfig.baseUrl}${apiConfig.googleLogin}`,
+          {
+            email: profile.email,
+            firstName: profile.given_name,
+            lastName: profile.family_name,
+            googleId: profile.sub,
+          },
+        );
+
+        if (res.status === 200) {
+          const cookieStore = await cookies();
+
+          cookieStore.set("sessionToken", res.data.token, {
+            secure: true,
+            maxAge: 24 * 60 * 60,
+          });
+          cookieStore.set(
+            "firstName",
+            res.data.user?.firstName || profile.given_name,
+            {
+              maxAge: 24 * 60 * 60,
+            },
+          );
+          cookieStore.set(
+            "lastName",
+            res.data.user?.lastName || profile.family_name,
+            {
+              maxAge: 24 * 60 * 60,
+            },
+          );
+        }
+      }
+      return true;
+    },
+  },
+
+  pages: { signIn: "/login" },
+  secret: process.env.NEXTAUTH_SECRET,
+};
+
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
